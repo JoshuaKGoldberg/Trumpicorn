@@ -1,0 +1,10 @@
+dist/**
+docs/**
+lib/**
+*.css
+*.d.ts
+*.js*
+*.html
+node_modules/
+npm-debug.log
+debug.log
