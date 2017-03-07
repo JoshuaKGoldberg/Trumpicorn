@@ -1,38 +1,80 @@
+import { Physics } from "gamestartr/lib/components/Physics";
+import { Scrolling } from "gamestartr/lib/components/Scrolling";
+import { Things } from "gamestartr/lib/components/Things";
+import { Utilities } from "gamestartr/lib/components/Utilities";
 import { GameStartr } from "gamestartr/lib/GameStartr";
 import { IProcessedSizeSettings } from "gamestartr/lib/IGameStartr";
-import { Things } from "gamestartr/lib/components/Things";
-import { Scrolling } from "gamestartr/lib/components/Scrolling";
-import { Physics } from "gamestartr/lib/components/Physics";
-import { Utilities } from "gamestartr/lib/components/Utilities";
+import { IUserWrappr } from "userwrappr/lib/IUserWrappr";
+import { UserWrappr } from "userwrappr/lib/UserWrappr";
 
 import { Collisions } from "./components/Collisions";
 import { Gameplay } from "./components/Gameplay";
 import { Graphics } from "./components/Graphics";
-import { Maps } from "./components/Maps";
+import { Inputs } from "./components/Inputs";
 import { Maintenance } from "./components/Maintenance";
+import { Maps } from "./components/Maps";
 import { IPlayer, Player } from "./components/Player";
 import { Stars } from "./components/Stars";
 import { IThing } from "./components/Things";
 import { IModuleSettings, ModuleSettingsGenerator } from "./settings/ModuleSettings";
 
 /**
- * A crowd of Trump heads has appeared all across the sky! It's up to you to stomp them out.
+ * Escape the Trump!
  */
 export class Trumpicorn extends GameStartr {
+    /**
+     * Module settings passed to individual create* members.
+     */
+    public moduleSettings: IModuleSettings;
+
+    /**
+     * 
+     */
+    public userWrapper: IUserWrappr;
+
+    /**
+     * 
+     */
     public collisions: Collisions<this>;
 
+    /**
+     * 
+     */
     public gameplay: Gameplay<this>;
 
+    /**
+     * 
+     */
     public graphics: Graphics<this>;
 
+    /**
+     * 
+     */
+    public inputs: Inputs<this>;
+
+    /**
+     * 
+     */
     public maps: Maps<this>;
 
+    /**
+     * 
+     */
     public maintenance: Maintenance<this>;
 
+    /**
+     * 
+     */
     public player: Player<this>;
 
+    /**
+     * 
+     */
     public stars: Stars<this>;
 
+    /**
+     * 
+     */
     public players: IPlayer[];
 
     /**
@@ -42,6 +84,7 @@ export class Trumpicorn extends GameStartr {
         this.collisions = new Collisions(this);
         this.gameplay = new Gameplay(this);
         this.graphics = new Graphics(this);
+        this.inputs = new Inputs(this);
         this.maps = new Maps(this);
         this.maintenance = new Maintenance(this);
         this.physics = new Physics(this);
@@ -59,6 +102,8 @@ export class Trumpicorn extends GameStartr {
      */
     protected resetModules(settings: IProcessedSizeSettings): void {
         super.resetModules(settings);
+
+        this.userWrapper = this.createUserWrapper(this.moduleSettings, settings);
 
         this.pixelDrawer.setThingArrays([
             this.groupHolder.getGroup("Scenery") as IThing[],
@@ -85,5 +130,17 @@ export class Trumpicorn extends GameStartr {
             ...new ModuleSettingsGenerator().generate(this),
             ...settings.moduleSettings
         };
+    }
+
+    /**
+     * @param moduleSettings   Stored settings to generate modules.
+     * @param settings   Settings to reset an instance of the FullScreenPokemon class.
+     * @returns A new internal UserWrappr.
+     */
+    protected createUserWrapper(moduleSettings: IModuleSettings, _settings: IProcessedSizeSettings): IUserWrappr {
+        return new UserWrappr({
+            gameStarter: this,
+            ...moduleSettings.ui
+        });
     }
 }

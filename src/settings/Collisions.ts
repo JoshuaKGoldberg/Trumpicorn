@@ -6,7 +6,7 @@ import { Trumpicorn } from "../Trumpicorn";
  * @param trumpicorn   A generating Trumpicorn instance.
  * @returns Object settings for the Trumpicorn instance.
  */
-export function GenerateCollisionsSettings(trump: Trumpicorn): ICollisionsModuleSettings {
+export function GenerateCollisionsSettings(trumpicorn: Trumpicorn): ICollisionsModuleSettings {
     "use strict";
 
     return {
@@ -14,16 +14,16 @@ export function GenerateCollisionsSettings(trump: Trumpicorn): ICollisionsModule
         keyGroupName: "groupType",
         keyTypeName: "title",
         globalCheckGenerators: {
-            Player: trump.collisions.generateCanThingCollide.bind(trump.collisions),
+            Player: trumpicorn.collisions.generateCanThingCollide.bind(trumpicorn.collisions),
         },
         hitCheckGenerators: {
             Player: {
-                Character: trump.collisions.generateIsPlayerTouchingCharacter.bind(trump.collisions)
+                Character: trumpicorn.collisions.generateIsPlayerTouchingCharacter.bind(trumpicorn.collisions)
             }
         },
         hitCallbackGenerators: {
             Player: {
-                Character: trump.collisions.generateHitPlayerCharacter.bind(trump.collisions)
+                Character: trumpicorn.collisions.generateHitPlayerCharacter.bind(trumpicorn.collisions)
             }
         }
     };

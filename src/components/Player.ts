@@ -33,11 +33,6 @@ export interface IPlayer extends ICharacter {
     keys: IPlayerKeys;
 
     /**
-     * A secondary sprite of the Player for overlapping the side of the screen.
-     */
-    shadow?: IPlayer;
-
-    /**
      * TimeHandlr cycles for the Player.
      */
     cycles: {
@@ -47,7 +42,7 @@ export interface IPlayer extends ICharacter {
         running: ITimeCycle;
 
         [i: string]: ITimeCycle;
-    }
+    };
 }
 
 /**
@@ -65,6 +60,11 @@ export interface IPlayerKeys {
     right?: boolean;
 
     /**
+     * Whether the up key is currently pressed.
+     */
+    up?: boolean;
+
+    /**
      * The current user-indicated direction.
      */
     direction?: PlayerDirection;
@@ -75,8 +75,6 @@ export interface IPlayerKeys {
     jump?: boolean;
 }
 
-
-
 /**
  * Player functions used by Trumpicorn instances.
  */
@@ -86,10 +84,6 @@ export class Player<TGameStartr extends Trumpicorn> extends Component<TGameStart
      */
     public onPlayerAdded(player: IPlayer): void {
         player.keys = {};
-    }
-
-    public boostUp(_player: IPlayer): void {
-        // ...
     }
 
     /**
@@ -134,8 +128,14 @@ export class Player<TGameStartr extends Trumpicorn> extends Component<TGameStart
             }
         }
 
-        // Map sides overflow
-        this.checkPlayerSidesOverflow(player);
+        // Horizontal boundaries
+        if (player.left < 0) {
+            this.gameStarter.physics.setLeft(player, 0);
+            player.xvel = 0;
+        } else if (player.right > this.gameStarter.mapScreener.right) {
+            this.gameStarter.physics.setRight(player, this.gameStarter.mapScreener.right);
+            player.xvel = 0;
+        }
 
         // Rainbow spawning
         if (player.xvel !== 0 && player.yvel !== 0) {
@@ -144,20 +144,19 @@ export class Player<TGameStartr extends Trumpicorn> extends Component<TGameStart
 
         // Collisions
         this.gameStarter.thingHitter.checkHitsForThing(player);
-        if (player.shadow) {
-            this.gameStarter.thingHitter.checkHitsForThing(player.shadow);
-        }
     }
 
-    private addRainbowBehind(player: IPlayer): void {
-
+    /**
+     * 
+     */
+    private addRainbowBehind(_player: IPlayer): void {
+        // ...
     }
 
-    private checkPlayerSidesOverflow(player: IPlayer): void {
-
-    }
-
-    private stopRunning(player: IPlayer): void {
-
+    /**
+     * 
+     */
+    private stopRunning(_player: IPlayer): void {
+        // ...
     }
 }

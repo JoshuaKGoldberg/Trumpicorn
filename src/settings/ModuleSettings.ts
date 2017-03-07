@@ -3,15 +3,22 @@ import { IModuleSettings as IGameStartrModuleSettings } from "gamestartr/lib/IGa
 import { Trumpicorn } from "../Trumpicorn";
 import { GenerateCollisionsSettings } from "./Collisions";
 import { GenerateGroupsSettings } from "./Groups";
+import { GenerateInputSettings } from "./Input";
 import { GenerateMapsSettings } from "./Maps";
 import { GenerateObjectsSettings } from "./Objects";
 import { GenerateRunnerSettings } from "./Runner";
 import { GenerateSpritesSettings } from "./Sprites";
+import { GenerateUISettings, IUserWrapprSettings } from "./Ui";
 
 /**
  * Stored settings to generate modules.
  */
-export interface IModuleSettings extends IGameStartrModuleSettings { }
+export interface IModuleSettings extends IGameStartrModuleSettings {
+    /**
+     * Settings regarding user-facing UI.
+     */
+    ui: IUserWrapprSettings;
+}
 
 /**
  * Generator for Trumpicorn settings.
@@ -25,10 +32,12 @@ export class ModuleSettingsGenerator {
         return {
             collisions: GenerateCollisionsSettings(trumpicorn),
             groups: GenerateGroupsSettings(),
+            input: GenerateInputSettings(trumpicorn),
             maps: GenerateMapsSettings(),
             objects: GenerateObjectsSettings(trumpicorn),
             runner: GenerateRunnerSettings(trumpicorn),
-            sprites: GenerateSpritesSettings()
+            sprites: GenerateSpritesSettings(),
+            ui: GenerateUISettings()
         };
     }
 }

@@ -32,9 +32,11 @@ export class Collisions<TGameStartr extends Trumpicorn> extends Component<TGameS
             && player.top <= (character.bottom));
     }
 
+    /**
+     * 
+     */
     public generateHitPlayerCharacter(): (player: IPlayer, character: IThing) => boolean {
-        return (thing: IPlayer, other: IThing): boolean => {
-            this.gameStarter.player.boostUp(thing);
+        return (_thing: IPlayer, other: IThing): boolean => {
             this.gameStarter.physics.killNormal(other);
 
             return true;
