@@ -24,16 +24,14 @@ export function GenerateObjectsSettings(trumpicorn: Trumpicorn): IObjectsModuleS
                         PlayerShadow: {}
                     }
                 },
-                Particle: {
-                    
-                },
+                Particle: {},
                 Scenery: {
-                   Rainbow: {},
                    Star: {}
                 },
-                Text: {
-
-                }
+                Solid: {
+                   Rainbow: {}
+                },
+                Text: {}
             }
         },
         properties: {
@@ -88,13 +86,21 @@ export function GenerateObjectsSettings(trumpicorn: Trumpicorn): IObjectsModuleS
                 groupType: "Particle"
             },
             Scenery: {
-                groupType: "Scenery"
+                groupType: "Scenery",
+                width: 1,
+                height: 6
             },
             Star: {
                 width: 8,
                 height: 8,
                 movement: trumpicorn.stars.movement.bind(trumpicorn.stars),
                 onThingAdded: trumpicorn.stars.onStarAdded.bind(trumpicorn.stars)
+            },
+            Solid: {
+                groupType: "Solid",
+                width: 16,
+                height: 32,
+                repeat: true
             },
             Text: {
                 groupType: "Text"

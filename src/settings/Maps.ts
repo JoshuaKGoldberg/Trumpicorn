@@ -9,7 +9,7 @@ export function GenerateMapsSettings(): IMapsModuleSettings {
     return {
         mapDefault: "America",
         locationDefault: "Freedom",
-        groupTypes: ["Scenery", "Text", "Character", "Player", "Particle"],
+        groupTypes: ["Scenery", "Solid", "Text", "Character", "Player", "Particle"],
         library: {
             America: {
                 name: "America",

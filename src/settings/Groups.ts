@@ -8,7 +8,7 @@ export function GenerateGroupsSettings(): IGroupsModuleSettings {
     "use strict";
 
     return {
-        groupNames: ["Scenery", "Text", "Character", "Player", "Particle"],
+        groupNames: ["Scenery", "Solid", "Text", "Character", "Player", "Particle"],
         groupTypes: "Array"
     };
 }

@@ -1,7 +1,6 @@
 import { Component } from "eightbittr/lib/Component";
 
 import { Trumpicorn } from "../Trumpicorn";
-import { IPlayer } from "./Player";
 
 /**
  * Input functions used by Trumpicorn instances.

@@ -10,20 +10,23 @@ export function GenerateCollisionsSettings(trumpicorn: Trumpicorn): ICollisionsM
     "use strict";
 
     return {
-        groupNames: ["Player"],
+        groupNames: ["Player", "Solid"],
         keyGroupName: "groupType",
         keyTypeName: "title",
         globalCheckGenerators: {
             Player: trumpicorn.collisions.generateCanThingCollide.bind(trumpicorn.collisions),
+            Solid: trumpicorn.collisions.generateCanThingCollide.bind(trumpicorn.collisions),
         },
         hitCheckGenerators: {
             Player: {
-                Character: trumpicorn.collisions.generateIsPlayerTouchingCharacter.bind(trumpicorn.collisions)
+                Character: trumpicorn.collisions.generateIsPlayerTouchingCharacter.bind(trumpicorn.collisions),
+                Solid: trumpicorn.collisions.generateIsPlayerTouchingSolid.bind(trumpicorn.collisions)
             }
         },
         hitCallbackGenerators: {
             Player: {
-                Character: trumpicorn.collisions.generateHitPlayerCharacter.bind(trumpicorn.collisions)
+                Character: trumpicorn.collisions.generateHitPlayerCharacter.bind(trumpicorn.collisions),
+                Solid: trumpicorn.collisions.generateHitPlayerSolid.bind(trumpicorn.collisions)
             }
         }
     };

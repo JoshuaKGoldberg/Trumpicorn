@@ -30,7 +30,7 @@ export class Gameplay<TGameStartr extends Trumpicorn> extends GameStartrGameplay
         const player: IPlayer = this.gameStarter.objectMaker.make<IPlayer>("Player");
 
         this.gameStarter.physics.setMidX(player, this.gameStarter.mapScreener.middleX);
-        this.gameStarter.physics.setBottom(player, 80);
+        this.gameStarter.physics.setBottom(player, this.gameStarter.mapScreener.height - 70);
         this.gameStarter.things.add(player);
 
         return player;

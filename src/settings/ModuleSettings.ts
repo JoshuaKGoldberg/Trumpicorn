@@ -6,6 +6,7 @@ import { GenerateGroupsSettings } from "./Groups";
 import { GenerateInputSettings } from "./Input";
 import { GenerateMapsSettings } from "./Maps";
 import { GenerateObjectsSettings } from "./Objects";
+import { GenerateQuadrantsSettings } from "./Quadrants";
 import { GenerateRunnerSettings } from "./Runner";
 import { GenerateSpritesSettings } from "./Sprites";
 import { GenerateUISettings, IUserWrapprSettings } from "./Ui";
@@ -35,6 +36,7 @@ export class ModuleSettingsGenerator {
             input: GenerateInputSettings(trumpicorn),
             maps: GenerateMapsSettings(),
             objects: GenerateObjectsSettings(trumpicorn),
+            quadrants: GenerateQuadrantsSettings(),
             runner: GenerateRunnerSettings(trumpicorn),
             sprites: GenerateSpritesSettings(),
             ui: GenerateUISettings()

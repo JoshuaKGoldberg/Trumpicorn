@@ -14,6 +14,7 @@ import { Inputs } from "./components/Inputs";
 import { Maintenance } from "./components/Maintenance";
 import { Maps } from "./components/Maps";
 import { IPlayer, Player } from "./components/Player";
+import { Rainbows } from "./components/Rainbows";
 import { Stars } from "./components/Stars";
 import { IThing } from "./components/Things";
 import { IModuleSettings, ModuleSettingsGenerator } from "./settings/ModuleSettings";
@@ -70,6 +71,11 @@ export class Trumpicorn extends GameStartr {
     /**
      * 
      */
+    public rainbows: Rainbows<this>;
+
+    /**
+     * 
+     */
     public stars: Stars<this>;
 
     /**
@@ -90,6 +96,7 @@ export class Trumpicorn extends GameStartr {
         this.physics = new Physics(this);
         this.player = new Player(this);
         this.scrolling = new Scrolling(this);
+        this.rainbows = new Rainbows(this);
         this.stars = new Stars(this);
         this.things = new Things(this);
         this.utilities = new Utilities(this);
@@ -107,6 +114,7 @@ export class Trumpicorn extends GameStartr {
 
         this.pixelDrawer.setThingArrays([
             this.groupHolder.getGroup("Scenery") as IThing[],
+            this.groupHolder.getGroup("Solid") as IThing[],
             this.groupHolder.getGroup("Text") as IThing[],
             this.groupHolder.getGroup("Character") as IThing[],
             this.groupHolder.getGroup("Player") as IThing[],
@@ -114,6 +122,7 @@ export class Trumpicorn extends GameStartr {
         ]);
 
         this.thingHitter.cacheChecksForType("Player", "Player");
+        this.thingHitter.cacheChecksForType("Rainbow", "Solid");
 
         this.players = [];
         this.gameplay.gameStart();

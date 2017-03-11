@@ -2,7 +2,7 @@ import { Component } from "eightbittr/lib/Component";
 import { ITimeCycle } from "timehandlr/lib/ITimeHandlr";
 
 import { Trumpicorn } from "../Trumpicorn";
-import { ICharacter } from "./Things";
+import { ICharacter, IThing } from "./Things";
 
 /**
  * Which direction a Player is facing.
@@ -23,11 +23,6 @@ export interface IPlayer extends ICharacter {
     canJump?: boolean;
 
     /**
-     * Whether this is currently running (flying through the air).
-     */
-    running?: boolean;
-
-    /**
      * The current state of user-provided input.
      */
     keys: IPlayerKeys;
@@ -43,6 +38,16 @@ export interface IPlayer extends ICharacter {
 
         [i: string]: ITimeCycle;
     };
+
+    /**
+     * A Solid this is resting on, if any.
+     */
+    resting?: IThing;
+
+    /**
+     * Whether this is currently running (flying through the air).
+     */
+    running?: boolean;
 }
 
 /**
@@ -99,6 +104,8 @@ export class Player<TGameStartr extends Trumpicorn> extends Component<TGameStart
      * 
      */
     public maintainPlayer(player: IPlayer): void {
+        this.gameStarter.thingHitter.checkHitsForThing(player);
+
         // Horizontal slowdown
         if (Math.abs(player.xvel) > 1) {
             player.xvel *= 0.96;
@@ -114,8 +121,10 @@ export class Player<TGameStartr extends Trumpicorn> extends Component<TGameStart
             player.xvel -= 1.17;
         }
 
-        // Gravity
-        if (player.yvel < 4.9) {
+        // Resting, gravity
+        if (player.resting) {
+            this.gameStarter.physics.setBottom(player, player.resting.top);
+        } else if (player.yvel < 4.9) {
             player.yvel += .35;
         }
 

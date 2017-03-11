@@ -1,7 +1,6 @@
 import { IRunnerModuleSettings } from "gamestartr/lib/IGameStartr";
 
 import { Trumpicorn } from "../Trumpicorn";
-import { IThing } from "../components/Things";
 
 /**
  * @param trumpicorn   A generating Trumpicorn instance.
@@ -15,14 +14,11 @@ export function GenerateRunnerSettings(trumpicorn: Trumpicorn): IRunnerModuleSet
         adjustFramerate: true,
         games: [
             (): void => {
-                trumpicorn.maintenance.maintainMoving(
-                    trumpicorn.groupHolder.getGroup("Scenery") as IThing[]);
-                trumpicorn.maintenance.maintainMoving(
-                    trumpicorn.groupHolder.getGroup("Character") as IThing[]);
-                trumpicorn.maintenance.maintainMoving(
-                    trumpicorn.groupHolder.getGroup("Player") as IThing[]);
-                trumpicorn.maintenance.maintainMoving(
-                    trumpicorn.groupHolder.getGroup("Particle") as IThing[]);
+                trumpicorn.maintenance.maintainMoving("Scenery");
+                trumpicorn.maintenance.maintainMoving("Character");
+                trumpicorn.maintenance.maintainMoving("Solid");
+                trumpicorn.maintenance.maintainMoving("Player");
+                trumpicorn.maintenance.maintainMoving("Particle");
             },
             (): void => {
                 trumpicorn.player.maintain();

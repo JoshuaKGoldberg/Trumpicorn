@@ -10,7 +10,10 @@ export class Maintenance<TGameStartr extends Trumpicorn> extends Component<TGame
     /**
      * 
      */
-    public maintainMoving(things: IThing[]): void {
+    public maintainMoving(groupName: string): void {
+        const things: IThing[] = this.gameStarter.groupHolder.getGroup(groupName) as IThing[];
+        this.gameStarter.quadsKeeper.determineAllQuadrants(groupName, things);
+
         for (const thing of things) {
             if (thing.movement) {
                 thing.movement(thing);
