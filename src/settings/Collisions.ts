@@ -14,8 +14,9 @@ export function GenerateCollisionsSettings(trumpicorn: Trumpicorn): ICollisionsM
         keyGroupName: "groupType",
         keyTypeName: "title",
         globalCheckGenerators: {
+            Character: trumpicorn.collisions.generateCanThingCollide.bind(trumpicorn.collisions),
             Player: trumpicorn.collisions.generateCanThingCollide.bind(trumpicorn.collisions),
-            Solid: trumpicorn.collisions.generateCanThingCollide.bind(trumpicorn.collisions),
+            Solid: trumpicorn.collisions.generateCanThingCollide.bind(trumpicorn.collisions)
         },
         hitCheckGenerators: {
             Player: {

@@ -1,7 +1,6 @@
 import { Gameplay as GameStartrGameplay } from "gamestartr/lib/components/Gameplay";
 
 import { Trumpicorn } from "../Trumpicorn";
-import { IPlayer } from "./Player";
 import { IThing } from "./Things";
 
 /**
@@ -17,28 +16,14 @@ export class Gameplay<TGameStartr extends Trumpicorn> extends GameStartrGameplay
 
         this.gameStarter.maps.setMap("America", "Freedom");
 
-        const rainbow: IThing = this.gameStarter.rainbows.createBottomRainbow();
+        const rainbow: IThing = this.gameStarter.rainbows.createAndPositionRainbow();
 
         this.gameStarter.players = [
-            this.createAndPositionPlayer(rainbow)
+            this.gameStarter.player.createAndPositionPlayer(rainbow)
         ];
 
+        this.gameStarter.trump.createAndPositionTrump();
+
         super.gameStart();
-    }
-
-    /**
-     * 
-     * 
-     * @todo Extend for multiplayer?
-     */
-    private createAndPositionPlayer(rainbow: IThing): IPlayer {
-        const player: IPlayer = this.gameStarter.objectMaker.make<IPlayer>("Player");
-
-        this.gameStarter.physics.setMidXObj(player, rainbow);
-        this.gameStarter.physics.setBottom(player, rainbow.top);
-        player.resting = rainbow;
-        this.gameStarter.things.add(player);
-
-        return player;
     }
 }

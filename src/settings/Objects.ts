@@ -20,9 +20,8 @@ export function GenerateObjectsSettings(trumpicorn: Trumpicorn): IObjectsModuleS
             Location: {},
             Thing: {
                 Character: {
-                    Player: {
-                        PlayerShadow: {}
-                    }
+                    Player: {},
+                    Trump: {}
                 },
                 Particle: {},
                 Scenery: {
@@ -73,6 +72,13 @@ export function GenerateObjectsSettings(trumpicorn: Trumpicorn): IObjectsModuleS
             },
             Character: {
                 groupType: "Character"
+            },
+            Trump: {
+                width: 88,
+                height: 88,
+                speed: 1.17,
+                movement: trumpicorn.trump.movement.bind(trumpicorn.trump),
+                onCollide: trumpicorn.trump.onCollide.bind(trumpicorn.trump)
             },
             Player: {
                 groupType: "Player",

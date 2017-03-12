@@ -2,7 +2,7 @@ import { Component } from "eightbittr/lib/Component";
 
 import { Trumpicorn } from "../Trumpicorn";
 import { IPlayer } from "./Player";
-import { IThing } from "./Things";
+import { ICharacter, IThing } from "./Things";
 
 /**
  * Collision functions used by Trumpicorn instances.
@@ -15,7 +15,7 @@ export class Collisions<TGameStartr extends Trumpicorn> extends Component<TGameS
      * 
      * @returns A Function that generates isCharacterTouchingCharacter. 
      */
-    public generateIsPlayerTouchingCharacter(): (player: IPlayer, character: IThing) => boolean {
+    public generateIsPlayerTouchingCharacter(): (player: IPlayer, character: ICharacter) => boolean {
         /**
          * Generic checker for whether a player is touching a character.
          * 
@@ -23,7 +23,7 @@ export class Collisions<TGameStartr extends Trumpicorn> extends Component<TGameS
          * @param character
          * @returns Whether player is touching character.
          */
-        return (player: IPlayer, character: IThing): boolean => (
+        return (player: IPlayer, character: ICharacter): boolean => (
             player.right >= character.left
             && player.left <= character.right
             && player.bottom >= character.top
@@ -45,26 +45,19 @@ export class Collisions<TGameStartr extends Trumpicorn> extends Component<TGameS
          * @param character
          * @returns Whether player is touching solid.
          */
-        return (player: IPlayer, solid: IThing): boolean => {
-            return (
-                player.right >= solid.left
-                && player.left <= solid.right
-                && player.bottom >= solid.top
-                && player.top <= solid.bottom);
-        };
-        // return (player: IPlayer, solid: IThing): boolean => (
-        //     player.right >= solid.left
-        //     && player.left <= solid.right
-        //     && player.bottom >= solid.top
-        //     && player.top <= solid.bottom);
+        return (player: IPlayer, solid: IThing): boolean => (
+            player.right >= solid.left
+            && player.left <= solid.right
+            && player.bottom >= solid.top
+            && player.top <= solid.bottom);
     }
 
     /**
      * 
      */
-    public generateHitPlayerCharacter(): (player: IPlayer, character: IThing) => boolean {
-        return (_player: IPlayer, _character: IThing): boolean => {
-            return true;
+    public generateHitPlayerCharacter(): (player: IPlayer, character: ICharacter) => boolean {
+        return (player: IPlayer, character: ICharacter): boolean => {
+            return character.onCollide(player, character);
         };
     }
 

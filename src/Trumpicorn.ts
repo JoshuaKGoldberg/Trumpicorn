@@ -17,6 +17,7 @@ import { IPlayer, Player } from "./components/Player";
 import { Rainbows } from "./components/Rainbows";
 import { Stars } from "./components/Stars";
 import { IThing } from "./components/Things";
+import { Trump } from "./components/Trump";
 import { IModuleSettings, ModuleSettingsGenerator } from "./settings/ModuleSettings";
 
 /**
@@ -81,6 +82,11 @@ export class Trumpicorn extends GameStartr {
     /**
      * 
      */
+    public trump: Trump<this>;
+
+    /**
+     * 
+     */
     public players: IPlayer[];
 
     /**
@@ -99,6 +105,7 @@ export class Trumpicorn extends GameStartr {
         this.rainbows = new Rainbows(this);
         this.stars = new Stars(this);
         this.things = new Things(this);
+        this.trump = new Trump(this);
         this.utilities = new Utilities(this);
     }
 
@@ -121,6 +128,7 @@ export class Trumpicorn extends GameStartr {
             this.groupHolder.getGroup("Particle") as IThing[]
         ]);
 
+        this.thingHitter.cacheChecksForType("Trump", "Character");
         this.thingHitter.cacheChecksForType("Player", "Player");
         this.thingHitter.cacheChecksForType("Rainbow", "Solid");
 

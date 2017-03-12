@@ -10,7 +10,7 @@ export class Rainbows<TGameStartr extends Trumpicorn> extends Component<TGameSta
     /**
      * 
      */
-    public createBottomRainbow(): IThing {
+    public createAndPositionRainbow(): IThing {
         const middleX: number = this.gameStarter.mapScreener.middleX;
         const twoThirdsY: number = this.gameStarter.mapScreener.middleY * 1.5;
         const rainbow: IThing = this.gameStarter.objectMaker.make<IThing>("Rainbow", {
