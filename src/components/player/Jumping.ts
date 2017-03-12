@@ -10,24 +10,35 @@ export class Jumping<TGameStartr extends Trumpicorn> extends Component<TGameStar
     /**
      * 
      */
-    public jump(player: IPlayer): void {
-        if (player.resting) {
-            this.gameStarter.physics.shiftVert(player, -Math.abs(player.resting.yvel));
+    private static readonly pointsDefault: number = 25;
+    /**
+     * 
+     */
+    public jump(thing: IPlayer): void {
+        let label: string = "JUMP";
+        let points: number = Jumping.pointsDefault;
+
+        if (thing.resting) {
+            this.gameStarter.physics.shiftVert(thing, -Math.abs(thing.resting.yvel));
         }
 
-        player.yvel = -3.5;
-        if (player.resting && (player.xvel > 0) === (player.resting.xvel > 0)) {
-            player.xvel *= Math.abs(player.resting.xvel);
-            player.yvel -= Math.abs(player.xvel) / 2;
+        thing.yvel = -3.5;
+        if (thing.resting && (thing.xvel > 0) === (thing.resting.xvel > 0)) {
+            thing.xvel *= Math.abs(thing.resting.xvel);
+            thing.yvel -= Math.abs(thing.xvel) / 2;
+
+            label = "BOOST";
+            points += Math.floor(Math.abs(thing.xvel) * Math.abs(thing.yvel));
         }
 
-        player.jumping = true;
-        player.resting = undefined;
+        thing.jumping = true;
+        thing.resting = undefined;
 
-        this.gameStarter.physics.shiftVert(player, player.yvel);
+        this.gameStarter.scoring.score({ label, points, thing });
+        this.gameStarter.physics.shiftVert(thing, thing.yvel);
         this.gameStarter.timeHandler.addEvent(
             (): void => {
-               player.jumping = false;
+               thing.jumping = false;
             },
             35);
     }

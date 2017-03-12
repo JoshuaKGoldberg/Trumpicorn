@@ -28,9 +28,9 @@ export class Particles<TGameStartr extends Trumpicorn> extends Component<TGameSt
      * 
      */
     public createParticle(midX: number, midY: number): IParticle {
-        const particle: IParticle = this.gameStarter.objectMaker.make<IParticle>("Particle", {
+        const particle: IParticle = this.gameStarter.objectMaker.make<IParticle>("Sparkle", {
             opacity: this.gameStarter.numberMaker.random(),
-            opacityDelta: 0.005,
+            opacityDelta: 0.01,
             xvel: this.gameStarter.numberMaker.randomWithin(-0.35, 0.35),
             yvel: this.gameStarter.numberMaker.randomWithin(-0.21, 0.35)
         });

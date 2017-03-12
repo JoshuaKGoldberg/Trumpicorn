@@ -57,9 +57,15 @@ export class Powerups<TGameStartr extends Trumpicorn> extends Component<TGameSta
     /**
      * 
      */
-    public onCollide(_player: IPlayer, powerup: IPowerup): void {
+    public onCollide(player: IPlayer, powerup: IPowerup): void {
         powerup.trump.disabledByPowerup = powerup.descriptor;
         this.gameStarter.physics.killNormal(powerup);
+
+        this.gameStarter.scoring.score({
+            label: "POWERUP",
+            points: 200,
+            thing: player
+        });
 
         this.gameStarter.timeHandler.addEvent(
             (): void => {

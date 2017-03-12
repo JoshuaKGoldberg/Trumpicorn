@@ -13,7 +13,7 @@ export class Collisions<TGameStartr extends Trumpicorn> extends Component<TGameS
      * 
      * @returns A Function that generates canThingCollide.
      */
-    public generateCanThingCollide = () => (thing: IThing): boolean => !thing.frozen;
+    public generateCanThingCollide = () => (thing: IThing): boolean => thing.alive && !thing.frozen;
 
     /**
      * Function generator for the generic isCharacterTouchingCharacter checker.

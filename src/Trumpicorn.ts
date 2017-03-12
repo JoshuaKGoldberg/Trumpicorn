@@ -17,7 +17,9 @@ import { Particles } from "./components/Particles";
 import { IPlayer, Player } from "./components/Player";
 import { Powerups } from "./components/Powerups";
 import { Rainbows } from "./components/Rainbows";
+import { Scoring } from "./components/Scoring";
 import { Stars } from "./components/Stars";
+import { Text } from "./components/Text";
 import { IThing } from "./components/Things";
 import { Trump } from "./components/Trump";
 import { IModuleSettings, ModuleSettingsGenerator } from "./settings/ModuleSettings";
@@ -89,7 +91,17 @@ export class Trumpicorn extends GameStartr {
     /**
      * 
      */
+    public scoring: Scoring<this>;
+
+    /**
+     * 
+     */
     public stars: Stars<this>;
+
+    /**
+     * 
+     */
+    public text: Text<this>;
 
     /**
      * 
@@ -117,7 +129,9 @@ export class Trumpicorn extends GameStartr {
         this.powerups = new Powerups(this);
         this.scrolling = new Scrolling(this);
         this.rainbows = new Rainbows(this);
+        this.scoring = new Scoring(this);
         this.stars = new Stars(this);
+        this.text = new Text(this);
         this.things = new Things(this);
         this.trump = new Trump(this);
         this.utilities = new Utilities(this);

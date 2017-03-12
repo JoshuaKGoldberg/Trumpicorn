@@ -24,14 +24,55 @@ export function GenerateObjectsSettings(trumpicorn: Trumpicorn): IObjectsModuleS
                     Powerup: {},
                     Trump: {}
                 },
-                Particle: {},
+                Particle: {
+                    Sparkle: {},
+                    Text: {
+                       TextA: {},
+                       TextB: {},
+                       TextC: {},
+                       TextD: {},
+                       TextE: {},
+                       TextF: {},
+                       TextG: {},
+                       TextH: {},
+                       TextI: {},
+                       TextJ: {},
+                       TextK: {},
+                       TextL: {},
+                       TextM: {},
+                       TextN: {},
+                       TextO: {},
+                       TextP: {},
+                       TextQ: {},
+                       TextR: {},
+                       TextS: {},
+                       TextT: {},
+                       TextU: {},
+                       TextV: {},
+                       TextW: {},
+                       TextX: {},
+                       TextY: {},
+                       TextZ: {},
+                       Text0: {},
+                       Text1: {},
+                       Text2: {},
+                       Text3: {},
+                       Text4: {},
+                       Text5: {},
+                       Text6: {},
+                       Text7: {},
+                       Text8: {},
+                       Text9: {},
+                       TextExclamationMark: {},
+                       TextSpace: {}
+                   }
+                },
                 Scenery: {
-                   Star: {}
+                    Star: {}
                 },
                 Solid: {
                    Rainbow: {}
-                },
-                Text: {}
+                }
             }
         },
         properties: {
@@ -95,10 +136,16 @@ export function GenerateObjectsSettings(trumpicorn: Trumpicorn): IObjectsModuleS
                 onThingAdded: trumpicorn.player.onPlayerAdded.bind(trumpicorn.player)
             },
             Particle: {
-                groupType: "Particle",
+                groupType: "Particle"
+            },
+            Sparkle: {
                 width: 3,
                 height: 3,
                 movement: trumpicorn.particles.movement.bind(trumpicorn.particles)
+            },
+            Text: {
+                width: 8,
+                height: 8
             },
             Scenery: {
                 groupType: "Scenery",
@@ -119,9 +166,6 @@ export function GenerateObjectsSettings(trumpicorn: Trumpicorn): IObjectsModuleS
             },
             Rainbow: {
                 movement: trumpicorn.rainbows.movement.bind(trumpicorn.rainbows)
-            },
-            Text: {
-                groupType: "Text"
             }
         }
     };
