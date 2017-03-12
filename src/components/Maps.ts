@@ -15,7 +15,6 @@ export class Maps<TGameStartr extends Trumpicorn> extends GameStartrMaps<TGameSt
 
         this.gameStarter.pixelDrawer.setBackground(this.gameStarter.graphics.createNightGradient());
         this.gameStarter.stars.sprinkle();
-        this.gameStarter.rainbows.createBottomRainbow();
         this.gameStarter.gamesRunner.play();
 
         return location;

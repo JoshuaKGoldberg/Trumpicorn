@@ -60,6 +60,9 @@ export function GenerateObjectsSettings(trumpicorn: Trumpicorn): IObjectsModuleS
                 offsetX: 0,
                 offsetY: 0,
                 opacity: 1,
+                // Movement
+                xvel: 0,
+                yvel: 0,
                 // Collisions
                 tolTop: 0,
                 tolRight: 0,
@@ -76,8 +79,6 @@ export function GenerateObjectsSettings(trumpicorn: Trumpicorn): IObjectsModuleS
                 width: 44,
                 height: 33,
                 player: true,
-                xvel: 0,
-                yvel: 0,
                 onThingAdded: trumpicorn.player.onPlayerAdded.bind(trumpicorn.player)
             },
             Particle: {
@@ -101,6 +102,9 @@ export function GenerateObjectsSettings(trumpicorn: Trumpicorn): IObjectsModuleS
                 width: 16,
                 height: 32,
                 repeat: true
+            },
+            Rainbow: {
+                movement: trumpicorn.rainbows.movement.bind(trumpicorn.rainbows)
             },
             Text: {
                 groupType: "Text"

@@ -121,10 +121,25 @@ export class Player<TGameStartr extends Trumpicorn> extends Component<TGameStart
             player.xvel -= 1.17;
         }
 
-        // Resting, gravity
+        // Resting
         if (player.resting) {
-            this.gameStarter.physics.setBottom(player, player.resting.top);
-        } else if (player.yvel < 4.9) {
+            if (this.isOffResting(player, player.resting)) {
+                player.xvel += player.resting.xvel;
+                player.resting = undefined;
+            } else {
+                this.gameStarter.physics.shiftHoriz(player, player.resting.xvel);
+                this.gameStarter.physics.setBottom(player, player.resting.top);
+
+                if (player.xvel > 0) {
+                    player.xvel += .035;
+                } else if (player.xvel < 0) {
+                    player.xvel -= .035;
+                }
+            }
+        }
+
+        // Gravity
+        if (!player.resting && player.yvel < 4.9) {
             player.yvel += .35;
         }
 
@@ -146,11 +161,6 @@ export class Player<TGameStartr extends Trumpicorn> extends Component<TGameStart
             player.xvel = 0;
         }
 
-        // Rainbow spawning
-        if (player.xvel !== 0 && player.yvel !== 0) {
-            this.addRainbowBehind(player);
-        }
-
         // Collisions
         this.gameStarter.thingHitter.checkHitsForThing(player);
     }
@@ -158,8 +168,8 @@ export class Player<TGameStartr extends Trumpicorn> extends Component<TGameStart
     /**
      * 
      */
-    private addRainbowBehind(_player: IPlayer): void {
-        // ...
+    private isOffResting(player: IPlayer, resting: IThing): boolean {
+        return player.left > resting.right || player.right < resting.left;
     }
 
     /**
