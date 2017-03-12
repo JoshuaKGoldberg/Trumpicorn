@@ -113,15 +113,6 @@ export class Maintenance<TGameStartr extends Trumpicorn> extends Component<TGame
             } else if (!player.flipHoriz) {
                 this.gameStarter.graphics.flipHoriz(player);
             }
-        } 
-
-        // Particle visuals
-        if (player.xvel !== 0 || player.yvel !== 0) {
-            if (this.gameStarter.numberMaker.randomBooleanProbability(Math.abs(player.xvel) + Math.abs(player.yvel))) {
-                this.gameStarter.particles.createParticle(
-                    this.gameStarter.numberMaker.randomWithin(player.left, player.right),
-                    player.bottom);
-            }
         }
 
         // Running visuals

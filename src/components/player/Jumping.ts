@@ -14,32 +14,40 @@ export class Jumping<TGameStartr extends Trumpicorn> extends Component<TGameStar
     /**
      * 
      */
-    public jump(thing: IPlayer): void {
+    public jump(player: IPlayer): void {
+        const midX: number = this.gameStarter.physics.getMidX(player);
+        const midY: number = this.gameStarter.physics.getMidY(player);
         let label: string = "JUMP";
         let points: number = Jumping.pointsDefault;
 
-        if (thing.resting) {
-            this.gameStarter.physics.shiftVert(thing, -Math.abs(thing.resting.yvel));
+        if (player.resting) {
+            this.gameStarter.physics.shiftVert(player, -Math.abs(player.resting.yvel));
         }
 
-        thing.yvel = -3.5;
-        if (thing.resting && (thing.xvel > 0) === (thing.resting.xvel > 0)) {
-            thing.xvel *= Math.abs(thing.resting.xvel);
-            thing.yvel -= Math.abs(thing.xvel) / 2;
+        player.yvel = -3.5;
+        if (player.resting && (player.xvel > 0) === (player.resting.xvel > 0)) {
+            player.xvel *= Math.abs(player.resting.xvel);
+            player.yvel -= Math.abs(player.xvel) / 2;
 
             label = "BOOST";
-            points += Math.floor(Math.abs(thing.xvel) * Math.abs(thing.yvel));
+            points += Math.floor(Math.abs(player.xvel) * Math.abs(player.yvel)) + 5;
         }
 
-        thing.jumping = true;
-        thing.resting = undefined;
+        player.jumping = true;
+        player.resting = undefined;
 
-        this.gameStarter.scoring.score({ label, points, thing });
-        this.gameStarter.physics.shiftVert(thing, thing.yvel);
+        this.gameStarter.scoring.score({ label, midX, midY, points });
+        this.gameStarter.physics.shiftVert(player, player.yvel);
         this.gameStarter.timeHandler.addEvent(
             (): void => {
-               thing.jumping = false;
+               player.jumping = false;
             },
             35);
+
+        for (let i: number = 0; i < 70; i += 1) {
+            this.gameStarter.particles.createParticle(
+                this.gameStarter.numberMaker.randomWithin(player.left, player.right),
+                this.gameStarter.numberMaker.randomWithin(player.top, player.bottom));
+        }
     }
 }

@@ -24,6 +24,9 @@ export function GenerateRunnerSettings(trumpicorn: Trumpicorn): IRunnerModuleSet
                 trumpicorn.player.maintenance.maintain();
             },
             (): void => {
+                trumpicorn.scoring.maintain();
+            },
+            (): void => {
                 trumpicorn.timeHandler.handleEvents();
             },
             (): void => {

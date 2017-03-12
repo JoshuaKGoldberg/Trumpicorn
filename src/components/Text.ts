@@ -13,9 +13,19 @@ export interface IAddTextSettings {
     characters: string[];
 
     /**
-     * Triggering Thing to center the score on top of
+     * Whether the text should also float into the air.
      */
-    thing: IThing;
+    floating?: boolean;
+
+    /**
+     * Horizontal midpoint to place text on.
+     */
+    midX: number;
+
+    /**
+     * Vertical midpoint to place text on.
+     */
+    midY: number;
 }
 
 /**
@@ -40,46 +50,48 @@ export class Text<TGameStartr extends Trumpicorn> extends Component<TGameStartr>
     /**
      * 
      */
-    public addText(settings: IAddTextSettings): void {
+    public addText(settings: IAddTextSettings): IThing[] {
         const texts: IThing[] = settings.characters
             .map((character: string): IThing => this.gameStarter.objectMaker.make<IThing>(
                 "Text" + character,
                 {
-                    yvel: -0.25
+                    yvel: settings.floating ? -0.25 : 0
                 }));
 
         const totalWidth: number = texts.length * Text.textWidth + (texts.length - 1) * Text.textSpacing;
-        const midX: number = this.gameStarter.physics.getMidX(settings.thing);
-        const midY: number = this.gameStarter.physics.getMidY(settings.thing);
 
-        let startX: number = midX - totalWidth / 2;
+        let startX: number = settings.midX - totalWidth / 2;
 
         for (const text of texts) {
             this.gameStarter.things.add(text);
-            this.gameStarter.physics.setMid(text, startX, midY);
+            this.gameStarter.physics.setMid(text, startX, settings.midY);
 
             startX += Text.textSpacing + Text.textWidth;
         }
 
-        this.gameStarter.timeHandler.addEvent(
-            (): void => {
-                this.gameStarter.timeHandler.addEventInterval(
-                    (): void => {
-                        for (const text of texts) {
-                            text.opacity -= Text.opacityDecrease;
-                        }
-                    },
-                    1,
-                    1 / Text.opacityDecrease);
+        if (settings.floating) {
+            this.gameStarter.timeHandler.addEvent(
+                (): void => {
+                    this.gameStarter.timeHandler.addEventInterval(
+                        (): void => {
+                            for (const text of texts) {
+                                text.opacity -= Text.opacityDecrease;
+                            }
+                        },
+                        1,
+                        1 / Text.opacityDecrease);
 
-                this.gameStarter.timeHandler.addEvent(
-                    (): void => {
-                        for (const text of texts) {
-                            this.gameStarter.physics.killNormal(text);
-                        }
-                    },
-                    (1 / Text.opacityDecrease) + 1);
-            },
-            35);
+                    this.gameStarter.timeHandler.addEvent(
+                        (): void => {
+                            for (const text of texts) {
+                                this.gameStarter.physics.killNormal(text);
+                            }
+                        },
+                        (1 / Text.opacityDecrease) + 1);
+                },
+                35);
+        }
+
+        return texts;
     }
 }

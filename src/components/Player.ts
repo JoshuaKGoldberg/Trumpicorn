@@ -131,7 +131,7 @@ export class Player<TGameStartr extends Trumpicorn> extends Component<TGameStart
                 player.opacity -= 0.02;
                 this.gameStarter.physics.shiftVert(player, 0.25);
 
-                if (player.opacity === 0) {
+                if (player.opacity <= 0) {
                     this.gameStarter.physics.killNormal(player);
                     return true;
                 }

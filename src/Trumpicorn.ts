@@ -114,6 +114,11 @@ export class Trumpicorn extends GameStartr {
     public players: IPlayer[];
 
     /**
+     * 
+     */
+    public textDisplay: IThing[];
+
+    /**
      * Resets the system components.
      */
     protected resetComponents(): void {

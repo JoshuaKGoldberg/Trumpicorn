@@ -31,6 +31,11 @@ export class Gameplay<TGameStartr extends Trumpicorn> extends GameStartrGameplay
             this.gameStarter.powerups.interval,
             Infinity);
 
+        this.gameStarter.timeHandler.addEventInterval(
+            (): void => this.gameStarter.scoring.timedDecrease(),
+            14,
+            Infinity);
+
         super.gameStart();
     }
 }
