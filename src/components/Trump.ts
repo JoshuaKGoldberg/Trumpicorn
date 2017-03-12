@@ -35,19 +35,25 @@ export class Trump<TGameStartr extends Trumpicorn> extends Component<TGameStartr
      * 
      */
     public movement(trump: ITrump): void {
-        const closestPlayer: IPlayer = this.getClosestPlayer(trump, this.gameStarter.players);
-        const distanceX: number = this.gameStarter.physics.getMidX(closestPlayer) - this.gameStarter.physics.getMidX(trump);
-        const distanceY: number = this.gameStarter.physics.getMidY(closestPlayer) - this.gameStarter.physics.getMidY(trump);
+        const closestPlayer: IPlayer | undefined = this.getClosestPlayer(trump, this.gameStarter.players);
+        if (!closestPlayer) {
+            trump.xvel *= 0.98;
+            trump.yvel *= 0.98;
+            return;
+        }
 
-        const dx: number = distanceX > 0
-            ? Math.min(distanceX / 70, trump.speed)
-            : Math.max(distanceX / 70, -trump.speed);
-        const dy: number = distanceY > 0
-            ? Math.min(distanceY / 70, trump.speed)
-            : Math.max(distanceY / 70, -trump.speed);
+        const dx: number = this.gameStarter.physics.getMidX(closestPlayer) - this.gameStarter.physics.getMidX(trump);
+        const dy: number = this.gameStarter.physics.getMidY(closestPlayer) - this.gameStarter.physics.getMidY(trump);
 
-        this.gameStarter.physics.shiftBoth(trump, dx, dy);
+        const xvel: number = dx > 0
+            ? Math.min(dx / 70, trump.speed)
+            : Math.max(dx / 70, -trump.speed);
+        const yvel: number = dy > 0
+            ? Math.min(dy / 70, trump.speed)
+            : Math.max(dy / 70, -trump.speed);
 
+        trump.xvel = xvel;
+        trump.yvel = yvel;
         trump.speed += 0.00007;
     }
 
@@ -60,10 +66,26 @@ export class Trump<TGameStartr extends Trumpicorn> extends Component<TGameStartr
 
     /**
      * 
-     * 
-     * @todo Expand for multiplayer?
      */
-    private getClosestPlayer(_trump: ITrump, players: IPlayer[]): IPlayer {
-        return players[0];
+    private getClosestPlayer(trump: ITrump, players: IPlayer[]): IPlayer | undefined {
+        let bestDistance: number = -Infinity;
+        let bestPlayer: IPlayer | undefined = undefined;
+
+        for (const player of players) {
+            if (!player.alive) {
+                continue;
+            }
+
+            const distance: number = (
+                Math.abs(this.gameStarter.physics.getMidX(trump) - this.gameStarter.physics.getMidX(player))
+                + Math.abs(this.gameStarter.physics.getMidY(trump) - this.gameStarter.physics.getMidY(player)));
+
+            if (distance > bestDistance) {
+                bestDistance = distance;
+                bestPlayer = player;
+            }
+        }
+
+        return bestPlayer;
     }
 }

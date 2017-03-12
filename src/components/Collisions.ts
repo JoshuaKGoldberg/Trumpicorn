@@ -48,8 +48,8 @@ export class Collisions<TGameStartr extends Trumpicorn> extends Component<TGameS
         return (player: IPlayer, solid: IThing): boolean => (
             player.right >= solid.left
             && player.left <= solid.right
-            && player.bottom >= solid.top
-            && player.top <= solid.bottom);
+            && player.bottom >= solid.top - 2
+            && player.bottom <= solid.bottom + 2);
     }
 
     /**

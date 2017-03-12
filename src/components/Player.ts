@@ -123,6 +123,6 @@ export class Player<TGameStartr extends Trumpicorn> extends Component<TGameStart
      * 
      */
     public die(player: IPlayer): void {
-        player.opacity = 0;
+        this.gameStarter.physics.killNormal(player);
     }
 }

@@ -24,6 +24,7 @@ export class Jumping<TGameStartr extends Trumpicorn> extends Component<TGameStar
         player.jumping = true;
         player.resting = undefined;
 
+        this.gameStarter.physics.shiftVert(player, player.yvel);
         this.gameStarter.timeHandler.addEvent(
             (): void => {
                player.jumping = false;
