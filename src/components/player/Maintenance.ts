@@ -125,7 +125,9 @@ export class Maintenance<TGameStartr extends Trumpicorn> extends Component<TGame
         }
 
         // Running visuals
-        if (!player.resting || player.xvel !== 0 || player.yvel !== 0) {
+        if (!player.resting
+            || (Math.abs(player.xvel) - Math.abs(player.resting.xvel)) > 0.35
+            || (Math.abs(player.yvel) - Math.abs(player.resting.yvel)) > 0.35) {
             if (!player.running) {
                 player.running = true;
                 this.gameStarter.graphics.addClass(player, "running");

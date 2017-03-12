@@ -17,7 +17,7 @@ export class Jumping<TGameStartr extends Trumpicorn> extends Component<TGameStar
 
         player.yvel = -3.5;
         if (player.resting && (player.xvel > 0) === (player.resting.xvel > 0)) {
-            player.xvel *= 2;
+            player.xvel *= Math.abs(player.resting.xvel);
             player.yvel -= Math.abs(player.xvel) / 2;
         }
 

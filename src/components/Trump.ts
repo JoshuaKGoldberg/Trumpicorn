@@ -2,12 +2,18 @@ import { Component } from "eightbittr/lib/Component";
 
 import { Trumpicorn } from "../Trumpicorn";
 import { IPlayer } from "./Player";
+import { IPowerupDescriptor } from "./Powerups";
 import { ICharacter } from "./Things";
 
 /**
  * 
  */
 export interface ITrump extends ICharacter {
+    /**
+     * 
+     */
+    disabledByPowerup?: IPowerupDescriptor;
+
     /**
      * 
      */
@@ -44,13 +50,16 @@ export class Trump<TGameStartr extends Trumpicorn> extends Component<TGameStartr
 
         const dx: number = this.gameStarter.physics.getMidX(closestPlayer) - this.gameStarter.physics.getMidX(trump);
         const dy: number = this.gameStarter.physics.getMidY(closestPlayer) - this.gameStarter.physics.getMidY(trump);
+        const speed: number = trump.disabledByPowerup
+            ? trump.speed / trump.disabledByPowerup.strength
+            : trump.speed;
 
         let xvel: number = dx > 0
-            ? Math.min(dx / 70, trump.speed)
-            : Math.max(dx / 70, -trump.speed);
+            ? Math.min(dx / 70, speed)
+            : Math.max(dx / 70, -speed);
         let yvel: number = dy > 0
-            ? Math.min(dy / 70, trump.speed)
-            : Math.max(dy / 70, -trump.speed);
+            ? Math.min(dy / 70, speed)
+            : Math.max(dy / 70, -speed);
 
         if (closestPlayer.bottom > this.gameStarter.mapScreener.bottom - closestPlayer.height) {
             xvel *= 2.1;

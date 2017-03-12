@@ -61,7 +61,7 @@ export class Particles<TGameStartr extends Trumpicorn> extends Component<TGameSt
             -particle.opacityDelta / 2.1,
             particle.opacityDelta / 2.1);
 
-        if (particle.opacity === 0) {
+        if (particle.opacity <= 0) {
             this.gameStarter.physics.killNormal(particle);
         }
 

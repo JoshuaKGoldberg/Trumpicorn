@@ -21,6 +21,7 @@ export function GenerateObjectsSettings(trumpicorn: Trumpicorn): IObjectsModuleS
             Thing: {
                 Character: {
                     Player: {},
+                    Powerup: {},
                     Trump: {}
                 },
                 Particle: {},
@@ -72,6 +73,11 @@ export function GenerateObjectsSettings(trumpicorn: Trumpicorn): IObjectsModuleS
             },
             Character: {
                 groupType: "Character"
+            },
+            Powerup: {
+                width: 40,
+                height: 42,
+                onCollide: trumpicorn.powerups.onCollide.bind(trumpicorn.powerups)
             },
             Trump: {
                 width: 88,

@@ -62,6 +62,7 @@ export function GenerateSpritesSettings(): ISpritesModuleSettings {
         },
         library: {
             Character: {
+                Powerup: "p[26]x01345,",
                 Trump: "p[22]x07744,"
             },
             Particle: {

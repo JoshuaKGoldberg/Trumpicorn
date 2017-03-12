@@ -74,9 +74,7 @@ export class Inputs<TGameStartr extends Trumpicorn> extends Component<TGameStart
             return;
         }
 
-        if (this.gameStarter.players[0].player) {
-            this.gameStarter.players[0].keys.left = true;
-        }
+        this.gameStarter.players[0].keys.left = true;
     }
 
     /**

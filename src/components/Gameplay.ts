@@ -2,6 +2,7 @@ import { Gameplay as GameStartrGameplay } from "gamestartr/lib/components/Gamepl
 
 import { Trumpicorn } from "../Trumpicorn";
 import { IThing } from "./Things";
+import { ITrump } from "./Trump";
 
 /**
  * Gameplay functions used by Trumpicorn instances.
@@ -16,13 +17,19 @@ export class Gameplay<TGameStartr extends Trumpicorn> extends GameStartrGameplay
 
         this.gameStarter.maps.setMap("America", "Freedom");
 
+        const trump: ITrump = this.gameStarter.trump.createAndPositionTrump();
         const rainbow: IThing = this.gameStarter.rainbows.createAndPositionRainbow();
 
         this.gameStarter.players = [
             this.gameStarter.player.createAndPositionPlayer(rainbow)
         ];
 
-        this.gameStarter.trump.createAndPositionTrump();
+        this.gameStarter.timeHandler.addEventInterval(
+            (): void => {
+                this.gameStarter.powerups.addPowerups(this.gameStarter.players, trump);
+            },
+            this.gameStarter.powerups.interval,
+            Infinity);
 
         super.gameStart();
     }

@@ -10,9 +10,7 @@ export function GenerateCollisionsSettings(trumpicorn: Trumpicorn): ICollisionsM
     "use strict";
 
     return {
-        groupNames: ["Player", "Solid"],
-        keyGroupName: "groupType",
-        keyTypeName: "title",
+        groupNames: ["Player", "Character", "Solid"],
         globalCheckGenerators: {
             Character: trumpicorn.collisions.generateCanThingCollide.bind(trumpicorn.collisions),
             Player: trumpicorn.collisions.generateCanThingCollide.bind(trumpicorn.collisions),

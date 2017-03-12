@@ -8,12 +8,17 @@ import { ICharacter, IThing } from "./Things";
  * Collision functions used by Trumpicorn instances.
  */
 export class Collisions<TGameStartr extends Trumpicorn> extends Component<TGameStartr> {
+    /**
+     * Function generator for the generic canThingCollide checker.
+     * 
+     * @returns A Function that generates canThingCollide.
+     */
     public generateCanThingCollide = () => (thing: IThing): boolean => !thing.frozen;
 
     /**
      * Function generator for the generic isCharacterTouchingCharacter checker.
      * 
-     * @returns A Function that generates isCharacterTouchingCharacter. 
+     * @returns A Function that generates isCharacterTouchingCharacter.
      */
     public generateIsPlayerTouchingCharacter(): (player: IPlayer, character: ICharacter) => boolean {
         /**

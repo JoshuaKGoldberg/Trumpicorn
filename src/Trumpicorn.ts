@@ -15,6 +15,7 @@ import { Maintenance } from "./components/Maintenance";
 import { Maps } from "./components/Maps";
 import { Particles } from "./components/Particles";
 import { IPlayer, Player } from "./components/Player";
+import { Powerups } from "./components/Powerups";
 import { Rainbows } from "./components/Rainbows";
 import { Stars } from "./components/Stars";
 import { IThing } from "./components/Things";
@@ -78,6 +79,11 @@ export class Trumpicorn extends GameStartr {
     /**
      * 
      */
+    public powerups: Powerups<this>;
+
+    /**
+     * 
+     */
     public rainbows: Rainbows<this>;
 
     /**
@@ -108,6 +114,7 @@ export class Trumpicorn extends GameStartr {
         this.physics = new Physics(this);
         this.particles = new Particles(this);
         this.player = new Player(this);
+        this.powerups = new Powerups(this);
         this.scrolling = new Scrolling(this);
         this.rainbows = new Rainbows(this);
         this.stars = new Stars(this);
@@ -135,6 +142,7 @@ export class Trumpicorn extends GameStartr {
             this.groupHolder.getGroup("Particle") as IThing[]
         ]);
 
+        this.thingHitter.cacheChecksForType("Powerup", "Character");
         this.thingHitter.cacheChecksForType("Trump", "Character");
         this.thingHitter.cacheChecksForType("Player", "Player");
         this.thingHitter.cacheChecksForType("Rainbow", "Solid");

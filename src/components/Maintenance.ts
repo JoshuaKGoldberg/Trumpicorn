@@ -14,7 +14,12 @@ export class Maintenance<TGameStartr extends Trumpicorn> extends Component<TGame
         const things: IThing[] = this.gameStarter.groupHolder.getGroup(groupName) as IThing[];
         this.gameStarter.quadsKeeper.determineAllQuadrants(groupName, things);
 
-        for (const thing of things) {
+        for (let i: number = things.length - 1; i >= 0; i -= 1) {
+            const thing: IThing = things[i];
+            if (!thing.alive) {
+                things.splice(i, 1);
+            }
+
             if (thing.frozen) {
                 continue;
             }
