@@ -5,7 +5,12 @@ import { IPlayer } from "./Player";
 /**
  * A Thing with traits specific to Trumpicorn.
  */
-export interface IThing extends IGameStartrThing { }
+export interface IThing extends IGameStartrThing {
+    /**
+     * Whether to skip movement and collision checks.
+     */
+    frozen?: boolean;
+}
 
 /**
  * An in-game Character Thing.

@@ -8,7 +8,7 @@ import { ICharacter, IThing } from "./Things";
  * Collision functions used by Trumpicorn instances.
  */
 export class Collisions<TGameStartr extends Trumpicorn> extends Component<TGameStartr> {
-    public generateCanThingCollide = () => () => true;
+    public generateCanThingCollide = () => (thing: IThing): boolean => !thing.frozen;
 
     /**
      * Function generator for the generic isCharacterTouchingCharacter checker.
@@ -48,8 +48,8 @@ export class Collisions<TGameStartr extends Trumpicorn> extends Component<TGameS
         return (player: IPlayer, solid: IThing): boolean => (
             player.right >= solid.left
             && player.left <= solid.right
-            && player.bottom >= solid.top - 2
-            && player.bottom <= solid.bottom + 2);
+            && player.bottom >= solid.top
+            && player.bottom <= solid.bottom);
     }
 
     /**

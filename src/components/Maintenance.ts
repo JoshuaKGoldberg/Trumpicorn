@@ -15,6 +15,10 @@ export class Maintenance<TGameStartr extends Trumpicorn> extends Component<TGame
         this.gameStarter.quadsKeeper.determineAllQuadrants(groupName, things);
 
         for (const thing of things) {
+            if (thing.frozen) {
+                continue;
+            }
+
             if (thing.movement) {
                 thing.movement(thing);
             }

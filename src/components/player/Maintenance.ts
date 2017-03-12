@@ -21,6 +21,10 @@ export class Maintenance<TGameStartr extends Trumpicorn> extends Component<TGame
      * 
      */
     public maintainPlayer(player: IPlayer): void {
+        if (player.frozen) {
+            return;
+        }
+
         this.gameStarter.thingHitter.checkHitsForThing(player);
 
         // Horizontal slowdown

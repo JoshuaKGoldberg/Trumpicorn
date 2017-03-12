@@ -20,16 +20,6 @@ export enum PlayerDirection {
  */
 export interface IPlayer extends ICharacter {
     /**
-     * Whether jump can be pressed (as opposed to it having just been).
-     */
-    jumping?: boolean;
-
-    /**
-     * The current state of user-provided input.
-     */
-    keys: IPlayerKeys;
-
-    /**
      * TimeHandlr cycles for the Player.
      */
     cycles: {
@@ -40,6 +30,16 @@ export interface IPlayer extends ICharacter {
 
         [i: string]: ITimeCycle;
     };
+
+    /**
+     * Whether jump can be pressed (as opposed to it having just been).
+     */
+    jumping?: boolean;
+
+    /**
+     * The current state of user-provided input.
+     */
+    keys: IPlayerKeys;
 
     /**
      * A Solid this is resting on, if any.
@@ -123,6 +123,21 @@ export class Player<TGameStartr extends Trumpicorn> extends Component<TGameStart
      * 
      */
     public die(player: IPlayer): void {
-        this.gameStarter.physics.killNormal(player);
+        player.frozen = true;
+
+        this.gameStarter.timeHandler.addEventInterval(
+            (): boolean => {
+                player.opacity -= 0.02;
+                this.gameStarter.physics.shiftVert(player, 0.25);
+
+                if (player.opacity === 0) {
+                    this.gameStarter.physics.killNormal(player);
+                    return true;
+                }
+
+                return false;
+            },
+            1,
+            Infinity);
     }
 }
