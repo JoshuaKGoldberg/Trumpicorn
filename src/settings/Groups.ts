@@ -1,6 +1,5 @@
 import { IGroupsModuleSettings } from "gamestartr/lib/IGameStartr";
 
-
 /**
  * @returns Group settings for a Trumpicorn instance.
  */

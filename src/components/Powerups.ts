@@ -50,7 +50,7 @@ export class Powerups<TGameStartr extends Trumpicorn> extends Component<TGameSta
     private static readonly types: { [i: string]: IPowerupDescriptor } = {
         Powerup: {
             duration: 350,
-            points: 1000,
+            points: 500,
             strength: 2
         }
     };

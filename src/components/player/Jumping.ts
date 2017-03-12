@@ -19,6 +19,7 @@ export class Jumping<TGameStartr extends Trumpicorn> extends Component<TGameStar
         const midY: number = this.gameStarter.physics.getMidY(player);
         let label: string = "JUMP";
         let points: number = Jumping.pointsDefault;
+        let sparkles: number = 7;
 
         if (player.resting) {
             this.gameStarter.physics.shiftVert(player, -Math.abs(player.resting.yvel));
@@ -31,6 +32,7 @@ export class Jumping<TGameStartr extends Trumpicorn> extends Component<TGameStar
 
             label = "BOOST";
             points += Math.floor(Math.abs(player.xvel) * Math.abs(player.yvel)) + 5;
+            sparkles += Math.ceil(Math.abs(player.xvel) + Math.abs(player.yvel));
         }
 
         player.jumping = true;
@@ -44,7 +46,22 @@ export class Jumping<TGameStartr extends Trumpicorn> extends Component<TGameStar
             },
             35);
 
-        for (let i: number = 0; i < 70; i += 1) {
+        this.gameStarter.timeHandler.addEventInterval(
+            (): boolean => {
+                this.createJumpSparkles(player, sparkles);
+
+                sparkles -= 1;
+                return sparkles === 0;
+            },
+            1,
+            Infinity);
+    }
+
+    /**
+     * 
+     */
+    private createJumpSparkles(player: IPlayer, quantity: number): void {
+        for (let i: number = 0; i < quantity; i += 1) {
             this.gameStarter.particles.createParticle(
                 this.gameStarter.numberMaker.randomWithin(player.left, player.right),
                 this.gameStarter.numberMaker.randomWithin(player.top, player.bottom));
