@@ -45,12 +45,17 @@ export class Trump<TGameStartr extends Trumpicorn> extends Component<TGameStartr
         const dx: number = this.gameStarter.physics.getMidX(closestPlayer) - this.gameStarter.physics.getMidX(trump);
         const dy: number = this.gameStarter.physics.getMidY(closestPlayer) - this.gameStarter.physics.getMidY(trump);
 
-        const xvel: number = dx > 0
+        let xvel: number = dx > 0
             ? Math.min(dx / 70, trump.speed)
             : Math.max(dx / 70, -trump.speed);
-        const yvel: number = dy > 0
+        let yvel: number = dy > 0
             ? Math.min(dy / 70, trump.speed)
             : Math.max(dy / 70, -trump.speed);
+
+        if (closestPlayer.bottom > this.gameStarter.mapScreener.bottom - closestPlayer.height) {
+            xvel *= 2.1;
+            yvel *= 2.1;
+        }
 
         trump.xvel = xvel;
         trump.yvel = yvel;

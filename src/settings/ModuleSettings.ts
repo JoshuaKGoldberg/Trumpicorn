@@ -2,6 +2,7 @@ import { IModuleSettings as IGameStartrModuleSettings } from "gamestartr/lib/IGa
 
 import { Trumpicorn } from "../Trumpicorn";
 import { GenerateCollisionsSettings } from "./Collisions";
+import { GenerateEventsSettings } from "./Events";
 import { GenerateGroupsSettings } from "./Groups";
 import { GenerateInputSettings } from "./Input";
 import { GenerateMapsSettings } from "./Maps";
@@ -32,6 +33,7 @@ export class ModuleSettingsGenerator {
     public generate(trumpicorn: Trumpicorn): IModuleSettings {
         return {
             collisions: GenerateCollisionsSettings(trumpicorn),
+            events: GenerateEventsSettings(),
             groups: GenerateGroupsSettings(),
             input: GenerateInputSettings(trumpicorn),
             maps: GenerateMapsSettings(),

@@ -32,7 +32,6 @@ export class Maintenance<TGameStartr extends Trumpicorn> extends Component<TGame
             player.xvel *= 0.96;
         } else {
             player.xvel = 0;
-            this.stopRunning(player);
         }
 
         // Key speed-ups
@@ -56,13 +55,23 @@ export class Maintenance<TGameStartr extends Trumpicorn> extends Component<TGame
                 player.resting = undefined;
             } else {
                 this.gameStarter.physics.shiftHoriz(player, player.resting.xvel);
-                this.gameStarter.physics.setBottom(player, player.resting.top);
+                this.gameStarter.physics.shiftVert(player, player.resting.yvel);
+
+                if (player.bottom < player.resting.top) {
+                    this.gameStarter.physics.setBottom(player, player.resting.top);
+                } else if (player.bottom > player.resting.top) {
+                    this.gameStarter.physics.shiftVert(player, -1);
+                }
 
                 if (player.xvel > 0) {
                     player.xvel += .035;
                 } else if (player.xvel < 0) {
                     player.xvel -= .035;
                 }
+
+                this.gameStarter.particles.createParticle(
+                    this.gameStarter.numberMaker.randomWithin(player.left, player.right),
+                    player.bottom);
             }
         }
 
@@ -71,12 +80,18 @@ export class Maintenance<TGameStartr extends Trumpicorn> extends Component<TGame
             player.yvel += .14;
         }
 
-        // Top map boundary
+        // Vertical map boundaries
         if (player.yvel < 0) {
             if (player.bottom < this.gameStarter.mapScreener.top) {
                 player.yvel = 0;
             } else if (player.top < this.gameStarter.mapScreener.top) {
                 player.yvel *= .84;
+            }
+        } else {
+            if (player.bottom >= this.gameStarter.mapScreener.bottom) {
+                player.xvel *= 0.84;
+                player.yvel = 0;
+                this.gameStarter.physics.setBottom(player, this.gameStarter.mapScreener.bottom);
             }
         }
 
@@ -89,6 +104,43 @@ export class Maintenance<TGameStartr extends Trumpicorn> extends Component<TGame
             player.xvel = 0;
         }
 
+        // Flipping visuals
+        if (player.xvel !== 0) {
+            if (player.xvel > 0) {
+                if (player.flipHoriz) {
+                    this.gameStarter.graphics.unflipHoriz(player);
+                }
+            } else if (!player.flipHoriz) {
+                this.gameStarter.graphics.flipHoriz(player);
+            }
+        } 
+
+        // Particle visuals
+        if (player.xvel !== 0 || player.yvel !== 0) {
+            if (this.gameStarter.numberMaker.randomBooleanProbability(Math.abs(player.xvel) + Math.abs(player.yvel))) {
+                this.gameStarter.particles.createParticle(
+                    this.gameStarter.numberMaker.randomWithin(player.left, player.right),
+                    player.bottom);
+            }
+        }
+
+        // Running visuals
+        if (!player.resting || player.xvel !== 0 || player.yvel !== 0) {
+            if (!player.running) {
+                player.running = true;
+                this.gameStarter.graphics.addClass(player, "running");
+                this.gameStarter.timeHandler.addClassCycle(
+                    player,
+                    ["two", "three", "four", "five", "normal"],
+                    "running",
+                    14);
+            }
+        } else if (player.running) {
+            player.running = false;
+            this.gameStarter.graphics.removeClasses(player, "running", "two", "three", "four", "five");
+            this.gameStarter.timeHandler.cancelClassCycle(player, "running");
+        }
+
         // Collisions
         this.gameStarter.thingHitter.checkHitsForThing(player);
     }
@@ -98,12 +150,5 @@ export class Maintenance<TGameStartr extends Trumpicorn> extends Component<TGame
      */
     private isOffResting(player: IPlayer, resting: IThing): boolean {
         return player.left > resting.right || player.right < resting.left;
-    }
-
-    /**
-     * 
-     */
-    private stopRunning(_player: IPlayer): void {
-        // ...
     }
 }

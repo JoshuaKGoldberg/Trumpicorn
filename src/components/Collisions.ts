@@ -48,8 +48,8 @@ export class Collisions<TGameStartr extends Trumpicorn> extends Component<TGameS
         return (player: IPlayer, solid: IThing): boolean => (
             player.right >= solid.left
             && player.left <= solid.right
-            && player.bottom >= solid.top
-            && player.bottom <= solid.bottom);
+            && player.bottom >= solid.top - 1
+            && player.bottom <= solid.bottom - solid.height / 4);
     }
 
     /**
@@ -68,7 +68,9 @@ export class Collisions<TGameStartr extends Trumpicorn> extends Component<TGameS
         return (player: IPlayer, solid: IThing): boolean => {
             player.resting = solid;
             player.yvel = 0;
-            this.gameStarter.physics.setBottom(player, solid.top);
+
+            this.gameStarter.timeHandler.cancelAllCycles(player);
+
             return false;
         };
     }

@@ -27,25 +27,27 @@ export class Rainbows<TGameStartr extends Trumpicorn> extends Component<TGameSta
 
     /**
      * 
-     * 
-     * @todo Actually compute dx, dy, maxX, maxY
      */
-    public movement(thing: IThing): void {
+    public movement(rainbow: IThing): void {
         const dx: number = this.gameStarter.mapScreener.width / 42000;
         const dy: number = this.gameStarter.mapScreener.height / 42000;
         const maxX: number = this.gameStarter.mapScreener.width / 21;
         const maxY: number = this.gameStarter.mapScreener.height / 56;
 
-        if (this.gameStarter.physics.getMidX(thing) > this.gameStarter.mapScreener.middleX) {
-            thing.xvel = Math.max(thing.xvel - dx, -maxX);
+        if (this.gameStarter.physics.getMidX(rainbow) > this.gameStarter.mapScreener.middleX) {
+            rainbow.xvel = Math.max(rainbow.xvel - dx, -maxX);
         } else {
-            thing.xvel = Math.min(thing.xvel + dx, maxX);
+            rainbow.xvel = Math.min(rainbow.xvel + dx, maxX);
         }
 
-        if (this.gameStarter.physics.getMidY(thing) > this.gameStarter.mapScreener.middleY) {
-            thing.yvel = Math.max(thing.yvel - dy, -maxY);
+        if (this.gameStarter.physics.getMidY(rainbow) > this.gameStarter.mapScreener.middleY) {
+            rainbow.yvel = Math.max(rainbow.yvel - dy, -maxY);
         } else {
-            thing.yvel = Math.min(thing.yvel + dy, maxY);
+            rainbow.yvel = Math.min(rainbow.yvel + dy, maxY);
         }
+
+        this.gameStarter.particles.createParticle(
+            this.gameStarter.numberMaker.randomWithin(rainbow.left, rainbow.right),
+            this.gameStarter.physics.getMidY(rainbow));
     }
 }

@@ -89,9 +89,10 @@ export function GenerateObjectsSettings(trumpicorn: Trumpicorn): IObjectsModuleS
                 onThingAdded: trumpicorn.player.onPlayerAdded.bind(trumpicorn.player)
             },
             Particle: {
-                width: 8,
-                height: 8,
-                groupType: "Particle"
+                groupType: "Particle",
+                width: 3,
+                height: 3,
+                movement: trumpicorn.particles.movement.bind(trumpicorn.particles)
             },
             Scenery: {
                 groupType: "Scenery",

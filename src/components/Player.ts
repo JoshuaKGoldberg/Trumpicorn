@@ -104,9 +104,10 @@ export class Player<TGameStartr extends Trumpicorn> extends Component<TGameStart
     public createAndPositionPlayer(rainbow: IThing): IPlayer {
         const player: IPlayer = this.gameStarter.objectMaker.make<IPlayer>("Player");
 
+        player.resting = rainbow;
+
         this.gameStarter.physics.setMidXObj(player, rainbow);
         this.gameStarter.physics.setBottom(player, rainbow.top);
-        player.resting = rainbow;
         this.gameStarter.things.add(player);
 
         return player;

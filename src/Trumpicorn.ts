@@ -13,6 +13,7 @@ import { Graphics } from "./components/Graphics";
 import { Inputs } from "./components/Inputs";
 import { Maintenance } from "./components/Maintenance";
 import { Maps } from "./components/Maps";
+import { Particles } from "./components/Particles";
 import { IPlayer, Player } from "./components/Player";
 import { Rainbows } from "./components/Rainbows";
 import { Stars } from "./components/Stars";
@@ -67,6 +68,11 @@ export class Trumpicorn extends GameStartr {
     /**
      * 
      */
+    public particles: Particles<this>;
+
+    /**
+     * 
+     */
     public player: Player<this>;
 
     /**
@@ -100,6 +106,7 @@ export class Trumpicorn extends GameStartr {
         this.maps = new Maps(this);
         this.maintenance = new Maintenance(this);
         this.physics = new Physics(this);
+        this.particles = new Particles(this);
         this.player = new Player(this);
         this.scrolling = new Scrolling(this);
         this.rainbows = new Rainbows(this);
@@ -121,9 +128,9 @@ export class Trumpicorn extends GameStartr {
 
         this.pixelDrawer.setThingArrays([
             this.groupHolder.getGroup("Scenery") as IThing[],
+            this.groupHolder.getGroup("Character") as IThing[],
             this.groupHolder.getGroup("Solid") as IThing[],
             this.groupHolder.getGroup("Text") as IThing[],
-            this.groupHolder.getGroup("Character") as IThing[],
             this.groupHolder.getGroup("Player") as IThing[],
             this.groupHolder.getGroup("Particle") as IThing[]
         ]);
