@@ -21,7 +21,7 @@ export function GenerateRunnerSettings(trumpicorn: Trumpicorn): IRunnerModuleSet
                 trumpicorn.maintenance.maintainMoving("Particle");
             },
             (): void => {
-                trumpicorn.player.maintain();
+                trumpicorn.player.maintenance.maintain();
             },
             (): void => {
                 trumpicorn.timeHandler.handleEvents();

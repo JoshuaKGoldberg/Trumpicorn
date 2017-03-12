@@ -76,6 +76,7 @@ export function GenerateObjectsSettings(trumpicorn: Trumpicorn): IObjectsModuleS
             },
             Player: {
                 groupType: "Player",
+                jumping: false,
                 width: 44,
                 height: 33,
                 player: true,
