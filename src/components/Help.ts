@@ -15,12 +15,12 @@ export class Help<TGameStartr extends Trumpicorn> extends Component<TGameStartr>
             ...this.gameStarter.text.addText({
                 characters: this.gameStarter.text.processText("ARROW KEYS FOR SINGLE PLAYER"),
                 midX: this.gameStarter.mapScreener.middleX,
-                midY: this.gameStarter.mapScreener.middleY - 8,
+                midY: this.gameStarter.mapScreener.middleY - 56,
             }),
             ...this.gameStarter.text.addText({
                 characters: this.gameStarter.text.processText("AWD FOR MULTIPLAYER"),
                 midX: this.gameStarter.mapScreener.middleX,
-                midY: this.gameStarter.mapScreener.middleY + 8,
+                midY: this.gameStarter.mapScreener.middleY - 40,
             })
         ];
 
@@ -30,7 +30,7 @@ export class Help<TGameStartr extends Trumpicorn> extends Component<TGameStartr>
                     this.gameStarter.physics.killNormal(text);
                 }
             },
-            350);
+            210);
     }
 
     /**
@@ -40,13 +40,13 @@ export class Help<TGameStartr extends Trumpicorn> extends Component<TGameStartr>
         this.gameStarter.text.addText({
             characters: this.gameStarter.text.processText("NICE TRY!"),
             midX: this.gameStarter.mapScreener.middleX,
-            midY: this.gameStarter.mapScreener.middleY - 8,
+            midY: this.gameStarter.mapScreener.middleY,
         });
 
         this.gameStarter.text.addText({
             characters: this.gameStarter.text.processText("PRESS SPACE TO GO AGAIN"),
             midX: this.gameStarter.mapScreener.middleX,
-            midY: this.gameStarter.mapScreener.middleY + 8,
+            midY: this.gameStarter.mapScreener.middleY + 16,
         });
     }
 }

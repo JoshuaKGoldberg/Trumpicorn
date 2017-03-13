@@ -18,7 +18,8 @@ export function GenerateInputSettings(trumpicorn: Trumpicorn): IInputModuleSetti
             down: [40],
             a: [65],
             d: [68],
-            w: [87]
+            w: [87],
+            space: [32],
         },
         triggers: {
             onkeydown: {
@@ -28,7 +29,8 @@ export function GenerateInputSettings(trumpicorn: Trumpicorn): IInputModuleSetti
                 down: trumpicorn.inputs.keyDownDown.bind(trumpicorn.inputs),
                 a: trumpicorn.inputs.receiveActionEvent.bind(trumpicorn.inputs, trumpicorn.inputs.keyDownLeft, 1),
                 d: trumpicorn.inputs.receiveActionEvent.bind(trumpicorn.inputs, trumpicorn.inputs.keyDownRight, 1),
-                w: trumpicorn.inputs.receiveActionEvent.bind(trumpicorn.inputs, trumpicorn.inputs.keyDownUp, 1)
+                w: trumpicorn.inputs.receiveActionEvent.bind(trumpicorn.inputs, trumpicorn.inputs.keyDownUp, 1),
+                space: trumpicorn.inputs.keyDownSpace.bind(trumpicorn.inputs)
             },
             onkeyup: {
                 left: trumpicorn.inputs.receiveActionEvent.bind(trumpicorn.inputs, trumpicorn.inputs.keyUpLeft, 0),
