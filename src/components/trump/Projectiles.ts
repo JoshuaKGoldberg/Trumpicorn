@@ -29,6 +29,7 @@ export class Projectiles<TGameStartr extends Trumpicorn> extends Component<TGame
     private static readonly quotes: string[] = [
         "ALTERNATIVE FACTS!",
         "BUILD THE WALL!",
+        "THE CYBER",
         "GOOD PEOPLE DON'T GO INTO GOVERNMENT",
         "GRAB THEM!",
         "I'M VERY RICH!",

@@ -40,6 +40,15 @@ export class Inputs<TGameStartr extends Trumpicorn> extends Component<TGameStart
     }
 
     /**
+     * 
+     */
+    public keyDownDown(_: void, event?: Event): void {
+        if (event && event.preventDefault) {
+            event.preventDefault();
+        }
+    }
+
+    /**
      * Reacts to a Character simulating a right key press. If possible, this causes
      * walking in the right direction. The onKeyDownRight mod trigger is fired.
      * 

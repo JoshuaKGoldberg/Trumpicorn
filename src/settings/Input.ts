@@ -14,13 +14,15 @@ export function GenerateInputSettings(trumpicorn: Trumpicorn): IInputModuleSetti
             // Keyboard aliases
             left:   [65, 37],     // a,     left
             right:  [68, 39],     // d,     right
-            up:     [87, 38]      // w,     up
+            up:     [87, 38],     // w,     up
+            down:   [83, 40],     // s,     down
         },
         triggers: {
             onkeydown: {
                 left: trumpicorn.inputs.keyDownLeft.bind(trumpicorn.inputs),
                 right: trumpicorn.inputs.keyDownRight.bind(trumpicorn.inputs),
-                up: trumpicorn.inputs.keyDownUp.bind(trumpicorn.inputs)
+                up: trumpicorn.inputs.keyDownUp.bind(trumpicorn.inputs),
+                down: trumpicorn.inputs.keyDownDown.bind(trumpicorn.inputs)
             },
             onkeyup: {
                 left: trumpicorn.inputs.keyUpLeft.bind(trumpicorn.inputs),
