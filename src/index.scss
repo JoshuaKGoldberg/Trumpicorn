@@ -19,6 +19,11 @@ header {
     -moz-user-select: none;
     -webkit-user-select: none;
     user-select: none;
+
+    .details {
+        float: right;
+        text-align: right;
+    }
 }
 
 section {
