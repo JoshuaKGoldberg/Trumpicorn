@@ -68,6 +68,7 @@ export function GenerateObjectsSettings(trumpicorn: Trumpicorn): IObjectsModuleS
                        Text7: {},
                        Text8: {},
                        Text9: {},
+                       TextApostrophe: {},
                        TextExclamationMark: {},
                        TextSpace: {}
                    }

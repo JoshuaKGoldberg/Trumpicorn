@@ -26,6 +26,22 @@ export class Projectiles<TGameStartr extends Trumpicorn> extends Component<TGame
     /**
      * 
      */
+    private static readonly quotes: string[] = [
+        "ALTERNATIVE FACTS!",
+        "BUILD THE WALL!",
+        "GOOD PEOPLE DON'T GO INTO GOVERNMENT",
+        "GRAB THEM!",
+        "I'M VERY RICH!",
+        "JINA",
+        "MY IQ IS ONE OF THE HIGHEST",
+        "NEGATIVE POLLS ARE FAKE NEWS!",
+        "SAD!",
+        "YOU'RE DISGUSTING!"
+    ];
+
+    /**
+     * 
+     */
     public readonly intervalStart: number = 280;
 
     /**
@@ -37,9 +53,11 @@ export class Projectiles<TGameStartr extends Trumpicorn> extends Component<TGame
      * 
      */
     public launchFromTrumpToPlayer(trump: ITrump, player: IPlayer): IProjectile {
+        const trumpX: number = this.gameStarter.physics.getMidX(trump);
+        const trumpY: number = this.gameStarter.physics.getMidY(trump);
         const projectileType: string = this.gameStarter.numberMaker.randomArrayMember(Projectiles.projectileTypes);
-        const dx: number = this.gameStarter.physics.getMidX(player) - this.gameStarter.physics.getMidX(trump);
-        const dy: number = this.gameStarter.physics.getMidY(player) - this.gameStarter.physics.getMidY(trump);
+        const dx: number = this.gameStarter.physics.getMidX(player) - trumpX;
+        const dy: number = this.gameStarter.physics.getMidY(player) - trumpY;
         const projectile: IProjectile = this.gameStarter.things.add("Projectile") as IProjectile;
 
         projectile.xvel = dx / Math.sqrt(dx ** 2 + dy ** 2) * projectile.speed;
@@ -53,6 +71,14 @@ export class Projectiles<TGameStartr extends Trumpicorn> extends Component<TGame
 
         this.gameStarter.graphics.addClass(projectile, projectileType);
         this.gameStarter.physics.setMidObj(projectile, trump);
+
+        this.gameStarter.text.addText({
+            characters: this.gameStarter.text.processQuote(
+                this.gameStarter.numberMaker.randomArrayMember(Projectiles.quotes)),
+            floating: true,
+            midX: trumpX,
+            midY: trumpY
+        });
 
         return projectile;
     }

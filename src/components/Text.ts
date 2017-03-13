@@ -50,6 +50,15 @@ export class Text<TGameStartr extends Trumpicorn> extends Component<TGameStartr>
     /**
      * 
      */
+    private static readonly textReplacements: { [i: string]: string } = {
+        "'": "Apostrophe",
+        "!": "ExclamationMark",
+        " ": "Space"
+    }
+
+    /**
+     * 
+     */
     public addText(settings: IAddTextSettings): IThing[] {
         const texts: IThing[] = settings.characters
             .map((character: string): IThing => this.gameStarter.objectMaker.make<IThing>(
@@ -93,5 +102,15 @@ export class Text<TGameStartr extends Trumpicorn> extends Component<TGameStartr>
         }
 
         return texts;
+    }
+
+    /**
+     * 
+     * @param quote 
+     */
+    public processQuote(quote: string): string[] {
+        return quote
+            .split("")
+            .map((character: string): string => Text.textReplacements[character] || character);
     }
 }

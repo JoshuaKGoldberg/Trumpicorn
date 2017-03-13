@@ -117,6 +117,7 @@ export function GenerateSpritesSettings(): ISpritesModuleSettings {
                 Text7: "p[00,01]x016,x17,01100011x05,11x05,11x05,11x06,110000",
                 Text8: "p[00,01]x017,x15,00110001100x15,0011000110110001100x15,00",
                 Text9: "p[00,01]x017,x15,0011000110110001100x16,x06,1100x15,00",
+                TextApostrophe: "p[00,01]00110110",
                 TextExclamationMark: "p[00,01]00011x05,11110000111100001111x05,11x014,11x06,11000",
                 TextSpace: ""
             },
