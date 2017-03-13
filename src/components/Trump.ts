@@ -38,8 +38,25 @@ export class Trump<TGameStartr extends Trumpicorn> extends Component<TGameStartr
     /**
      * 
      */
+    public readonly quotes: string[] = [
+        "ALTERNATIVE FACTS!",
+        "BUILD A WALL!",
+        "DRAIN THE SWAMP",
+        "GRAB THEM!",
+        "I'M VERY RICH",
+        "JINA!",
+        "MY IQ IS ONE OF THE HIGHEST",
+        "NEGATIVE POLLS ARE FAKE NEWS!",
+        "SAD!",
+        "THE CYBER",
+        "YOU'RE DISGUSTING!"
+    ];
+
+    /**
+     * 
+     */
     public createAndPositionTrump(existingTrump?: ITrump): ITrump {
-        const trump: ITrump = this.gameStarter.objectMaker.make<ITrump>("Trump")
+        const trump: ITrump = this.gameStarter.objectMaker.make<ITrump>("Trump");
         const duration: number = 175;
 
         this.gameStarter.things.add(trump);
@@ -127,11 +144,22 @@ export class Trump<TGameStartr extends Trumpicorn> extends Component<TGameStartr
      * 
      */
     public launchProjectile(trump: ITrump, interval: number): void {
+        const trumpX: number = this.gameStarter.physics.getMidX(trump);
+        const trumpY: number = this.gameStarter.physics.getMidY(trump) + trump.height / 3.5;
+
         if (interval > 117) {
             interval -= 5;
         }
 
         this.gameStarter.graphics.addClass(trump, "angery");
+
+        this.gameStarter.text.addText({
+            characters: this.gameStarter.text.processText(
+                this.gameStarter.numberMaker.randomArrayMember(this.quotes)),
+            floating: true,
+            midX: trumpX,
+            midY: trumpY
+        });
 
         this.gameStarter.timeHandler.addEvent(
             (): void => {

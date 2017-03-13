@@ -122,6 +122,7 @@ export class Player<TGameStartr extends Trumpicorn> extends Component<TGameStart
      */
     public die(player: IPlayer): void {
         player.frozen = true;
+        this.gameStarter.help.showEndText();
 
         this.gameStarter.timeHandler.addEventInterval(
             (): boolean => {

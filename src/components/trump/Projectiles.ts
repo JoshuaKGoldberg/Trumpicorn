@@ -26,23 +26,6 @@ export class Projectiles<TGameStartr extends Trumpicorn> extends Component<TGame
     /**
      * 
      */
-    private static readonly quotes: string[] = [
-        "ALTERNATIVE FACTS!",
-        "BUILD A WALL!",
-        "DRAIN THE SWAMP",
-        "GRAB THEM!",
-        "I'M VERY RICH",
-        "JINA!",
-        "MY IQ IS ONE OF THE HIGHEST",
-        "NEGATIVE POLLS ARE FAKE NEWS!",
-        "SAD!",
-        "THE CYBER",
-        "YOU'RE DISGUSTING!"
-    ];
-
-    /**
-     * 
-     */
     public readonly intervalStart: number = 280;
 
     /**
@@ -72,14 +55,6 @@ export class Projectiles<TGameStartr extends Trumpicorn> extends Component<TGame
         this.gameStarter.graphics.addClass(projectile, this.gameStarter.numberMaker.randomArrayMember(Projectiles.projectileTypes));
         this.gameStarter.physics.setMidX(projectile, trumpX);
         this.gameStarter.physics.setMidY(projectile, trumpY);
-
-        this.gameStarter.text.addText({
-            characters: this.gameStarter.text.processQuote(
-                this.gameStarter.numberMaker.randomArrayMember(Projectiles.quotes)),
-            floating: true,
-            midX: trumpX,
-            midY: trumpY
-        });
 
         return projectile;
     }

@@ -108,7 +108,7 @@ export class Text<TGameStartr extends Trumpicorn> extends Component<TGameStartr>
      * 
      * @param quote 
      */
-    public processQuote(quote: string): string[] {
+    public processText(quote: string): string[] {
         return quote
             .split("")
             .map((character: string): string => Text.textReplacements[character] || character);

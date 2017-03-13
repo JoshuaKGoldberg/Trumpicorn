@@ -10,6 +10,7 @@ import { UserWrappr } from "userwrappr/lib/UserWrappr";
 import { Collisions } from "./components/Collisions";
 import { Gameplay } from "./components/Gameplay";
 import { Graphics } from "./components/Graphics";
+import { Help } from "./components/Help";
 import { Inputs } from "./components/Inputs";
 import { Maintenance } from "./components/Maintenance";
 import { Maps } from "./components/Maps";
@@ -47,6 +48,11 @@ export class Trumpicorn extends GameStartr {
      * 
      */
     public gameplay: Gameplay<this>;
+
+    /**
+     * 
+     */
+    public help: Help<this>;
 
     /**
      * 
@@ -130,6 +136,7 @@ export class Trumpicorn extends GameStartr {
         this.collisions = new Collisions(this);
         this.gameplay = new Gameplay(this);
         this.graphics = new Graphics(this);
+        this.help = new Help(this);
         this.inputs = new Inputs(this);
         this.maps = new Maps(this);
         this.maintenance = new Maintenance(this);

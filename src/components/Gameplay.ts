@@ -37,6 +37,8 @@ export class Gameplay<TGameStartr extends Trumpicorn> extends GameStartrGameplay
             14,
             Infinity);
 
+        this.gameStarter.help.showInitialText();
+
         super.gameStart();
     }
 
