@@ -69,6 +69,7 @@ export class Projectiles<TGameStartr extends Trumpicorn> extends Component<TGame
             this.gameStarter.physics.shiftHoriz(projectile, -trump.width / 4);
         }
 
+        this.gameStarter.graphics.addClass(projectile, this.gameStarter.numberMaker.randomArrayMember(Projectiles.projectileTypes));
         this.gameStarter.physics.setMidX(projectile, trumpX);
         this.gameStarter.physics.setMidY(projectile, trumpY);
 

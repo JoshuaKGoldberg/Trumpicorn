@@ -89,9 +89,6 @@ export function GenerateObjectsSettings(trumpicorn: Trumpicorn): IObjectsModuleS
                 background: "black",
             },
             Thing: {
-                // Sizing
-                width: 32,
-                height: 32,
                 // Placement
                 alive: true,
                 placed: false,
@@ -139,8 +136,8 @@ export function GenerateObjectsSettings(trumpicorn: Trumpicorn): IObjectsModuleS
             Player: {
                 groupType: "Player",
                 jumping: false,
-                width: 44,
-                height: 33,
+                width: 88,
+                height: 66,
                 player: true,
                 onThingAdded: trumpicorn.player.onPlayerAdded.bind(trumpicorn.player)
             },
@@ -148,8 +145,8 @@ export function GenerateObjectsSettings(trumpicorn: Trumpicorn): IObjectsModuleS
                 groupType: "Particle"
             },
             Sparkle: {
-                width: 3,
-                height: 3,
+                width: 5,
+                height: 5,
                 movement: trumpicorn.particles.movement.bind(trumpicorn.particles)
             },
             Text: {
