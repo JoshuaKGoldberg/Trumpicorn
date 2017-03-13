@@ -40,28 +40,27 @@ export class Trump<TGameStartr extends Trumpicorn> extends Component<TGameStartr
      */
     public createAndPositionTrump(existingTrump?: ITrump): ITrump {
         const trump: ITrump = this.gameStarter.objectMaker.make<ITrump>("Trump");
+        const duration: number = 280;
 
         this.gameStarter.things.add(trump);
 
-        if (existingTrump) {
-            this.gameStarter.physics.setMidObj(trump, existingTrump);
-            this.disable(
-                trump,
-                {
-                    duration: 490
-                });
-
-            trump.speed /= 7;
-            this.gameStarter.timeHandler.addEvent(
-                (): void => {
-                    trump.speed *= 7;
-                },
-                210);
-
-        } else {
+        if (!existingTrump) {
             this.gameStarter.physics.setMidX(trump, this.gameStarter.mapScreener.middleX / 2);
             this.gameStarter.physics.setMidY(trump, this.gameStarter.mapScreener.middleY / 2);
+            return trump;
         }
+
+        this.gameStarter.physics.setMidObj(trump, existingTrump);
+        this.disable(trump, { duration });
+        this.disable(existingTrump, { duration });
+
+        this.gameStarter.timeHandler.addEventInterval(
+            (): void => {
+                this.gameStarter.physics.shiftHoriz(trump, 0.35);
+                this.gameStarter.physics.shiftHoriz(existingTrump, -0.35);
+            },
+            1,
+            duration);
 
         return trump;
     }
