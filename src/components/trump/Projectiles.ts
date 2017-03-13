@@ -32,8 +32,8 @@ export class Projectiles<TGameStartr extends Trumpicorn> extends Component<TGame
         "GOOD PEOPLE DON'T GO INTO GOVERNMENT",
         "GRAB THEM!",
         "I'M VERY RICH!",
-        "JINA",
-        "MY IQ IS ONE OF THE HIGHEST",
+        "JINA!",
+        "MY IQ IS ONE OF THE HIGHEST!",
         "NEGATIVE POLLS ARE FAKE NEWS!",
         "SAD!",
         "YOU'RE DISGUSTING!"

@@ -21,7 +21,7 @@ import { Scoring } from "./components/Scoring";
 import { Stars } from "./components/Stars";
 import { Text } from "./components/Text";
 import { IThing } from "./components/Things";
-import { Trump } from "./components/Trump";
+import { ITrump, Trump } from "./components/Trump";
 import { IModuleSettings, ModuleSettingsGenerator } from "./settings/ModuleSettings";
 
 /**
@@ -116,6 +116,11 @@ export class Trumpicorn extends GameStartr {
     /**
      * 
      */
+    public trumps: ITrump[];
+
+    /**
+     * 
+     */
     public textDisplay: IThing[];
 
     /**
@@ -168,6 +173,7 @@ export class Trumpicorn extends GameStartr {
         this.thingHitter.cacheChecksForType("Rainbow", "Solid");
 
         this.players = [];
+        this.trumps = [];
         this.gameplay.gameStart();
     }
 

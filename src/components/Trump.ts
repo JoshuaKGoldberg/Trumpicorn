@@ -13,7 +13,7 @@ export interface ITrump extends ICharacter {
     /**
      * 
      */
-    disabledByPowerup?: IPowerupDescriptor;
+    disabledByPowerups: number;
 
     /**
      * 
@@ -33,6 +33,11 @@ export class Trump<TGameStartr extends Trumpicorn> extends Component<TGameStartr
     /**
      * 
      */
+    public readonly appearanceInterval: number = 2100;
+
+    /**
+     * 
+     */
     public createAndPositionTrump(existingTrump?: ITrump): ITrump {
         const trump: ITrump = this.gameStarter.objectMaker.make<ITrump>("Trump");
 
@@ -43,9 +48,16 @@ export class Trump<TGameStartr extends Trumpicorn> extends Component<TGameStartr
             this.disable(
                 trump,
                 {
-                    duration: 490,
-                    strength: 7
+                    duration: 490
                 });
+
+            trump.speed /= 7;
+            this.gameStarter.timeHandler.addEvent(
+                (): void => {
+                    trump.speed *= 7;
+                },
+                210);
+
         } else {
             this.gameStarter.physics.setMidX(trump, this.gameStarter.mapScreener.middleX / 2);
             this.gameStarter.physics.setMidY(trump, this.gameStarter.mapScreener.middleY / 2);
@@ -58,13 +70,19 @@ export class Trump<TGameStartr extends Trumpicorn> extends Component<TGameStartr
      * 
      */
     public disable(trump: ITrump, powerup: IPowerupDescriptor): void {
-        trump.disabledByPowerup = powerup;
-        this.gameStarter.graphics.addClass(trump, "disabled");
+        if (trump.disabledByPowerups === 0) {
+            this.gameStarter.graphics.addClass(trump, "disabled");
+        }
+
+        trump.disabledByPowerups += 1;
 
         this.gameStarter.timeHandler.addEvent(
             (): void => {
-                trump.disabledByPowerup = undefined;
-                this.gameStarter.graphics.removeClass(trump, "disabled");
+                trump.disabledByPowerups -= 1;
+
+                if (trump.disabledByPowerups === 0) {
+                    this.gameStarter.graphics.removeClass(trump, "disabled");
+                }
             },
             powerup.duration);
     }
@@ -86,12 +104,10 @@ export class Trump<TGameStartr extends Trumpicorn> extends Component<TGameStartr
         trump.xvel = dx / Math.sqrt(dx ** 2 + dy ** 2) * trump.speed;
         trump.yvel = dy / Math.sqrt(dx ** 2 + dy ** 2) * trump.speed;
 
-        if (trump.disabledByPowerup) {
-            trump.xvel /= trump.disabledByPowerup.strength;
-            trump.yvel /= trump.disabledByPowerup.strength;
-        }
-
-        if (closestPlayer.bottom > this.gameStarter.mapScreener.bottom - closestPlayer.height) {
+        if (trump.disabledByPowerups) {
+            trump.xvel /= -7;
+            trump.yvel /= -7;
+        } else if (closestPlayer.bottom > this.gameStarter.mapScreener.bottom - closestPlayer.height) {
             trump.xvel *= 2.1;
             trump.yvel *= 2.1;
         }

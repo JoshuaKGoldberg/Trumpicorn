@@ -3,7 +3,6 @@ import { Component } from "eightbittr/lib/Component";
 import { Trumpicorn } from "../Trumpicorn";
 import { IPlayer } from "./Player";
 import { ICharacter } from "./Things";
-import { ITrump } from "./Trump";
 
 /**
  * 
@@ -18,11 +17,6 @@ export interface IPowerupDescriptor {
      * How many points to award for getting this powerup, if any.
      */
     points?: number;
-
-    /**
-     * 
-     */
-    strength: number;
 }
 
 /**
@@ -33,11 +27,6 @@ export interface IPowerup extends ICharacter {
      * 
      */
     descriptor: IPowerupDescriptor;
-
-    /**
-     * 
-     */
-    trump: ITrump;
 }
 
 /**
@@ -50,21 +39,23 @@ export class Powerups<TGameStartr extends Trumpicorn> extends Component<TGameSta
     private static readonly types: { [i: string]: IPowerupDescriptor } = {
         Powerup: {
             duration: 280,
-            points: 500,
-            strength: 2
+            points: 500
         }
     };
 
     /**
      * 
      */
-    public readonly interval: number = 490;
+    public readonly appearanceInterval: number = 490;
 
     /**
      * 
      */
     public onCollide(player: IPlayer, powerup: IPowerup): void {
-        this.gameStarter.trump.disable(powerup.trump, powerup.descriptor);
+        for (const trump of this.gameStarter.trumps) {
+            this.gameStarter.trump.disable(trump, powerup.descriptor);
+        }
+
         this.gameStarter.physics.killNormal(powerup);
 
         if (powerup.descriptor.points) {
@@ -82,17 +73,17 @@ export class Powerups<TGameStartr extends Trumpicorn> extends Component<TGameSta
      * 
      * @todo Avoid immediate intersections?
      */
-    public addPowerups(players: IPlayer[], trump: ITrump): void {
+    public addPowerups(players: IPlayer[]): void {
         for (const player of players) {
-            this.createPowerupForPlayer(player, trump);
+            this.createPowerupForPlayer(player);
         }
     }
 
     /**
      * 
      */
-    public createPowerupForPlayer(player: IPlayer, trump: ITrump): IPowerup {
-        const powerup: IPowerup = this.createRandomPowerup(trump);
+    public createPowerupForPlayer(player: IPlayer): IPowerup {
+        const powerup: IPowerup = this.createRandomPowerup();
 
         const coordinates: [number, number] = this.getPowerupCoordinates(player, powerup);
 
@@ -103,7 +94,7 @@ export class Powerups<TGameStartr extends Trumpicorn> extends Component<TGameSta
             (): void => {
                 powerup.opacity /= 2;
             },
-            this.interval * 0.7);
+            this.appearanceInterval * 0.7);
 
         this.gameStarter.timeHandler.addEvent(
             (): void => {
@@ -111,7 +102,7 @@ export class Powerups<TGameStartr extends Trumpicorn> extends Component<TGameSta
                     this.gameStarter.physics.killNormal(powerup);
                 }
             },
-            this.interval);
+            this.appearanceInterval);
 
         return powerup;
     }
@@ -119,15 +110,13 @@ export class Powerups<TGameStartr extends Trumpicorn> extends Component<TGameSta
     /**
      * 
      */
-    private createRandomPowerup(trump: ITrump): IPowerup {
+    private createRandomPowerup(): IPowerup {
         const title: string = this.gameStarter.numberMaker.randomArrayMember(Object.keys(Powerups.types));
         const powerup: IPowerup = this.gameStarter.objectMaker.make<IPowerup>(
             title,
             {
                 descriptor: Powerups.types[title]
             });
-
-        powerup.trump = trump;
 
         return powerup;
     }

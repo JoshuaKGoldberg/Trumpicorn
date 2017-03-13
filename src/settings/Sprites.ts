@@ -68,7 +68,10 @@ export function GenerateSpritesSettings(): ISpritesModuleSettings {
                     Pence: "p[23]x0784,",
                     Spicer: "p[23]x0784,"
                 },
-                Trump: "p[22]x07744,"
+                Trump: {
+                    normal: "p[22]x07744,",
+                    disabled: "p[28]x07744,"
+                }
             },
             Particle: {
                 Sparkle: {
