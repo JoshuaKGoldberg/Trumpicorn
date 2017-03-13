@@ -22,11 +22,7 @@ export function GenerateObjectsSettings(trumpicorn: Trumpicorn): IObjectsModuleS
                 Character: {
                     Player: {},
                     Powerup: {},
-                    Projectile: {
-                        Kellyanne: {},
-                        Pence: {},
-                        Spicer: {}
-                    },
+                    Projectile: {},
                     Trump: {}
                 },
                 Particle: {

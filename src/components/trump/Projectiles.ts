@@ -20,7 +20,7 @@ export class Projectiles<TGameStartr extends Trumpicorn> extends Component<TGame
      * 
      */
     private static readonly projectileTypes: string[] = [
-        "Kellyane", "Pence", "Spicer"
+        "normal", "two", "three"
     ];
 
     /**
@@ -55,8 +55,7 @@ export class Projectiles<TGameStartr extends Trumpicorn> extends Component<TGame
      */
     public launchFromTrumpToPlayer(trump: ITrump, player: IPlayer): IProjectile {
         const trumpX: number = this.gameStarter.physics.getMidX(trump);
-        const trumpY: number = this.gameStarter.physics.getMidY(trump) + trump.height / 1.4;
-        const projectileType: string = this.gameStarter.numberMaker.randomArrayMember(Projectiles.projectileTypes);
+        const trumpY: number = this.gameStarter.physics.getMidY(trump) + trump.height / 3.5;
         const dx: number = this.gameStarter.physics.getMidX(player) - trumpX;
         const dy: number = this.gameStarter.physics.getMidY(player) - trumpY;
         const projectile: IProjectile = this.gameStarter.things.add("Projectile") as IProjectile;
@@ -70,8 +69,8 @@ export class Projectiles<TGameStartr extends Trumpicorn> extends Component<TGame
             this.gameStarter.physics.shiftHoriz(projectile, -trump.width / 4);
         }
 
-        this.gameStarter.graphics.addClass(projectile, projectileType);
-        this.gameStarter.physics.setMidObj(projectile, trump);
+        this.gameStarter.physics.setMidX(projectile, trumpX);
+        this.gameStarter.physics.setMidY(projectile, trumpY);
 
         this.gameStarter.text.addText({
             characters: this.gameStarter.text.processQuote(

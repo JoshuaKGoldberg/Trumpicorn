@@ -40,7 +40,7 @@ export class Trump<TGameStartr extends Trumpicorn> extends Component<TGameStartr
      */
     public createAndPositionTrump(existingTrump?: ITrump): ITrump {
         const trump: ITrump = this.gameStarter.objectMaker.make<ITrump>("Trump");
-        const duration: number = 280;
+        const duration: number = 175;
 
         this.gameStarter.things.add(trump);
 
