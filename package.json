@@ -1,6 +1,6 @@
 {
   "name": "trumpicorn",
-  "description": "Escape the Trump!",
+  "description": "Escape the Trumps!",
   "version": "0.1.0",
   "author": {
     "name": "Josh Goldberg",
@@ -8,10 +8,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "ssh://git@github.com:JoshuaKGoldberg/Trumpicorn.git"
+    "url": "ssh://git@github.com:FullScreenShenanigans/Trumpicorn.git"
   },
   "bugs": {
-    "url": "https://github.com/JoshuaKGoldberg/Trumpicorn/issues"
+    "url": "https://github.com/FullScreenShenanigans/Trumpicorn/issues"
   },
   "license": "MIT",
   "dependencies": {

@@ -2,7 +2,8 @@
 [![Build Status](https://travis-ci.org/FullScreenShenanigans/Trumpicorn.svg?branch=master)](https://travis-ci.org/FullScreenShenanigans/Trumpicorn)
 [![NPM version](https://badge.fury.io/js/trumpicorn.svg)](http://badge.fury.io/js/trumpicorn)
 
-A crowd of Trump heads has appeared all across the sky!
+Escape the Trumps!
+
 
 
 ## Build Process

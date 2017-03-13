@@ -55,7 +55,7 @@ export class Projectiles<TGameStartr extends Trumpicorn> extends Component<TGame
      */
     public launchFromTrumpToPlayer(trump: ITrump, player: IPlayer): IProjectile {
         const trumpX: number = this.gameStarter.physics.getMidX(trump);
-        const trumpY: number = this.gameStarter.physics.getMidY(trump);
+        const trumpY: number = this.gameStarter.physics.getMidY(trump) + trump.height / 1.4;
         const projectileType: string = this.gameStarter.numberMaker.randomArrayMember(Projectiles.projectileTypes);
         const dx: number = this.gameStarter.physics.getMidX(player) - trumpX;
         const dy: number = this.gameStarter.physics.getMidY(player) - trumpY;

@@ -70,7 +70,8 @@ export class Trump<TGameStartr extends Trumpicorn> extends Component<TGameStartr
      */
     public disable(trump: ITrump, powerup: IPowerupDescriptor): void {
         if (trump.disabledByPowerups === 0) {
-            this.gameStarter.graphics.addClass(trump, "disabled");
+            trump.opacity = 0.7;
+            this.gameStarter.graphics.addClass(trump, "blurred");
         }
 
         trump.disabledByPowerups += 1;
@@ -80,7 +81,8 @@ export class Trump<TGameStartr extends Trumpicorn> extends Component<TGameStartr
                 trump.disabledByPowerups -= 1;
 
                 if (trump.disabledByPowerups === 0) {
-                    this.gameStarter.graphics.removeClass(trump, "disabled");
+                    trump.opacity = 1;
+                    this.gameStarter.graphics.removeClass(trump, "blurred");
                 }
             },
             powerup.duration);
@@ -125,17 +127,29 @@ export class Trump<TGameStartr extends Trumpicorn> extends Component<TGameStartr
      * 
      */
     public launchProjectile(trump: ITrump, interval: number): void {
-        this.projectiles.launchFromTrumpToPlayer(
-            trump,
-            this.gameStarter.numberMaker.randomArrayMember(this.gameStarter.players));
-
         if (interval > 117) {
             interval -= 5;
         }
 
+        this.gameStarter.graphics.addClass(trump, "angery");
+
         this.gameStarter.timeHandler.addEvent(
-            (): void => this.launchProjectile(trump, interval),
-            interval);
+            (): void => {
+                this.projectiles.launchFromTrumpToPlayer(
+                    trump,
+                    this.gameStarter.numberMaker.randomArrayMember(this.gameStarter.players));
+
+                this.gameStarter.timeHandler.addEvent(
+                    (): void => this.launchProjectile(trump, interval),
+                    interval);
+            },
+            21);
+
+        this.gameStarter.timeHandler.addEvent(
+            (): void => {
+                this.gameStarter.graphics.removeClass(trump, "angery");
+            },
+            35);
     }
 
     /**
