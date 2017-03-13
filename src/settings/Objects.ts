@@ -162,8 +162,8 @@ export function GenerateObjectsSettings(trumpicorn: Trumpicorn): IObjectsModuleS
                 height: 6
             },
             Star: {
-                width: 8,
-                height: 8,
+                width: 7,
+                height: 7,
                 movement: trumpicorn.stars.movement.bind(trumpicorn.stars),
                 onThingAdded: trumpicorn.stars.onStarAdded.bind(trumpicorn.stars)
             },

@@ -191,7 +191,7 @@ export function GenerateSpritesSettings(): ISpritesModuleSettings {
                 }
             },
             Scenery: {
-                Star: "p[0,1]000000000011111111111100000000000000000000111111111111"
+                Star: "p[0,1]0001x06,1x05,11100x17,00111x05,1x06,1000"
             },
             Solid: {
                 Rainbow: "p[22,23,24,25,26,27,28]x032,x132,x232,x332,x432,x532,x632,"
