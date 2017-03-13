@@ -10,7 +10,7 @@ export class Jumping<TGameStartr extends Trumpicorn> extends Component<TGameStar
     /**
      * 
      */
-    private static readonly pointsDefault: number = 25;
+    private static readonly pointsDefault: number = 20;
     /**
      * 
      */
@@ -27,8 +27,8 @@ export class Jumping<TGameStartr extends Trumpicorn> extends Component<TGameStar
 
         player.yvel = -4.2;
         if (player.resting && (player.xvel > 0) === (player.resting.xvel > 0)) {
-            player.xvel += player.resting.xvel * 2.1;
-            player.yvel -= Math.abs(player.xvel) / 2.8;
+            player.yvel -= Math.abs(player.xvel);
+            player.xvel += player.xvel / 2.1 + player.resting.xvel * 2.1;
 
             label = "BOOST";
             points += Math.min(Math.floor(Math.abs(player.xvel) * Math.abs(player.yvel)) + 5, 150);
