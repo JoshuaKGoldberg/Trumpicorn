@@ -14,6 +14,31 @@ export interface IParticle extends IThing {
 }
 
 /**
+ * 
+ */
+export interface IParticleSettings {
+    /**
+     * 
+     */
+    color?: string;
+
+    /**
+     * 
+     */
+    midX: number;
+
+    /**
+     * 
+     */
+    midY: number;
+
+    /**
+     * 
+     */
+    stationary?: boolean;
+}
+
+/**
  * Particle generation and movement.
  */
 export class Particles<TGameStartr extends Trumpicorn> extends Component<TGameStartr> {
@@ -21,32 +46,34 @@ export class Particles<TGameStartr extends Trumpicorn> extends Component<TGameSt
      * 
      */
     private static readonly colors: string[] = [
-        "red", "orange", "yellow", "green", "cyan", "blue", "purple"
+        "normal", "red", "orange", "yellow", "green", "cyan", "blue", "purple"
     ];
 
     /**
      * 
      */
-    public createParticle(midX: number, midY: number): IParticle {
+    public createSparkle(settings: IParticleSettings): IParticle {
         const particle: IParticle = this.gameStarter.objectMaker.make<IParticle>("Sparkle", {
             opacity: this.gameStarter.numberMaker.random(),
             opacityDelta: 0.01,
-            xvel: this.gameStarter.numberMaker.randomWithin(-0.35, 0.35),
-            yvel: this.gameStarter.numberMaker.randomWithin(-0.21, 0.35)
+            scale: this.gameStarter.numberMaker.randomWithin(0.35, 3)
         });
 
-        this.gameStarter.things.add(particle);
-        this.gameStarter.physics.setMidX(particle, midX);
-        this.gameStarter.physics.setMidY(particle, midY);
-
-        if (this.gameStarter.numberMaker.randomBooleanProbability(0.7)) {
-            particle.opacity /= 1.5;
-            particle.opacityDelta /= 1.5;
-
-            this.gameStarter.graphics.addClass(
-                particle,
-                this.gameStarter.numberMaker.randomArrayMember(Particles.colors));
+        if (!settings.stationary) {
+            particle.xvel = this.gameStarter.numberMaker.randomWithin(-0.35, 0.35);
+            particle.yvel = this.gameStarter.numberMaker.randomWithin(-0.21, 0.35);
         }
+
+        this.gameStarter.things.add(particle);
+        this.gameStarter.physics.setMidX(particle, settings.midX);
+        this.gameStarter.physics.setMidY(particle, settings.midY);
+
+        particle.opacity /= 1.5;
+        particle.opacityDelta /= 1.5;
+
+        this.gameStarter.graphics.addClass(
+            particle,
+            settings.color || this.gameStarter.numberMaker.randomArrayMember(Particles.colors));
 
         return particle;
     }

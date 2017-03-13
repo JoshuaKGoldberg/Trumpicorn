@@ -51,6 +51,22 @@ export class Powerups<TGameStartr extends Trumpicorn> extends Component<TGameSta
     /**
      * 
      */
+    public movement(powerup: IPowerup): void {
+        if (this.gameStarter.numberMaker.randomBooleanProbability(0.84)) {
+            return;
+        }
+
+        this.gameStarter.particles.createSparkle({
+            color: "red",
+            midX: this.gameStarter.numberMaker.randomWithin(powerup.left - 35, powerup.right + 35),
+            midY: this.gameStarter.numberMaker.randomWithin(powerup.top - 35, powerup.bottom + 35),
+            stationary: true
+        });
+    }
+
+    /**
+     * 
+     */
     public onCollide(player: IPlayer, powerup: IPowerup): void {
         for (const trump of this.gameStarter.trumps) {
             this.gameStarter.trump.disable(trump, powerup.descriptor);

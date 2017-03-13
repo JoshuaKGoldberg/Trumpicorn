@@ -117,6 +117,7 @@ export function GenerateObjectsSettings(trumpicorn: Trumpicorn): IObjectsModuleS
             Powerup: {
                 width: 42,
                 height: 35,
+                movement: trumpicorn.powerups.movement.bind(trumpicorn.powerups),
                 onCollide: trumpicorn.powerups.onCollide.bind(trumpicorn.powerups)
             },
             Projectile: {

@@ -1,5 +1,4 @@
 import { Component } from "eightbittr/lib/Component";
-import { ITimeCycle } from "timehandlr/lib/ITimeHandlr";
 
 import { Trumpicorn } from "../Trumpicorn";
 import { Jumping } from "./player/Jumping";
@@ -19,18 +18,6 @@ export enum PlayerDirection {
  * A Player Thing, which is normally controlled by the user.
  */
 export interface IPlayer extends ICharacter {
-    /**
-     * TimeHandlr cycles for the Player.
-     */
-    cycles: {
-        /**
-         * Running cycle, if the Player is running.
-         */
-        running: ITimeCycle;
-
-        [i: string]: ITimeCycle;
-    };
-
     /**
      * Whether jump can be pressed (as opposed to it having just been).
      */

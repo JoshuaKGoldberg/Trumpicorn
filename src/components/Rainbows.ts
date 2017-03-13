@@ -46,10 +46,11 @@ export class Rainbows<TGameStartr extends Trumpicorn> extends Component<TGameSta
             rainbow.yvel = Math.min(rainbow.yvel + dy, maxY);
         }
 
-        for (let i: number = 0; i < 3; i += 1) {
-            this.gameStarter.particles.createParticle(
-                this.gameStarter.numberMaker.randomWithin(rainbow.left, rainbow.right),
-                this.gameStarter.physics.getMidY(rainbow));
+        for (let i: number = rainbow.left; i <= rainbow.right; i += this.gameStarter.numberMaker.randomIntWithin(35, 56)) {
+            this.gameStarter.particles.createSparkle({
+                midX: i,
+                midY: rainbow.top,
+            });
         }
     }
 }

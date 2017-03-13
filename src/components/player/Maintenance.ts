@@ -63,9 +63,10 @@ export class Maintenance<TGameStartr extends Trumpicorn> extends Component<TGame
                     this.gameStarter.physics.shiftVert(player, -1);
                 }
 
-                this.gameStarter.particles.createParticle(
-                    this.gameStarter.numberMaker.randomWithin(player.left, player.right),
-                    player.bottom);
+                this.gameStarter.particles.createSparkle({
+                    midX: this.gameStarter.numberMaker.randomWithin(player.left, player.right),
+                    midY: player.bottom
+                });
             }
         }
 
@@ -113,8 +114,8 @@ export class Maintenance<TGameStartr extends Trumpicorn> extends Component<TGame
         if (!player.resting
             || (Math.abs(player.xvel) - Math.abs(player.resting.xvel)) > 0.35
             || (Math.abs(player.yvel) - Math.abs(player.resting.yvel)) > 0.35) {
-            if (!player.running) {
-                player.running = true;
+            if (!player.isRunning) {
+                player.isRunning = true;
                 this.gameStarter.graphics.addClass(player, "running");
                 this.gameStarter.timeHandler.addClassCycle(
                     player,
@@ -122,16 +123,17 @@ export class Maintenance<TGameStartr extends Trumpicorn> extends Component<TGame
                     "running",
                     14);
             }
-        } else if (player.running) {
-            player.running = false;
+        } else if (player.isRunning) {
+            player.isRunning = false;
             this.gameStarter.graphics.removeClasses(player, "running", "two", "three", "four", "five");
             this.gameStarter.timeHandler.cancelClassCycle(player, "running");
         }
 
         // Sparkling visuals
-        this.gameStarter.particles.createParticle(
-            this.gameStarter.physics.getMidX(player),
-            this.gameStarter.physics.getMidY(player));
+        this.gameStarter.particles.createSparkle({
+            midX: this.gameStarter.physics.getMidX(player),
+            midY: this.gameStarter.physics.getMidY(player)
+        });
 
         // Collisions
         this.gameStarter.thingHitter.checkHitsForThing(player);

@@ -62,9 +62,10 @@ export class Jumping<TGameStartr extends Trumpicorn> extends Component<TGameStar
      */
     private createJumpSparkles(player: IPlayer, quantity: number): void {
         for (let i: number = 0; i < quantity; i += 1) {
-            this.gameStarter.particles.createParticle(
-                this.gameStarter.numberMaker.randomWithin(player.left, player.right),
-                this.gameStarter.numberMaker.randomWithin(player.top, player.bottom));
+            this.gameStarter.particles.createSparkle({
+                midX: this.gameStarter.numberMaker.randomWithin(player.left, player.right),
+                midY: this.gameStarter.numberMaker.randomWithin(player.top, player.bottom)
+            });
         }
     }
 }
