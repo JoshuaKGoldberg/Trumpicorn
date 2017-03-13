@@ -4,6 +4,7 @@ import { Trumpicorn } from "../Trumpicorn";
 import { IPlayer } from "./Player";
 import { IPowerupDescriptor } from "./Powerups";
 import { ICharacter } from "./Things";
+import { Projectiles } from "./trump/Projectiles";
 
 /**
  * 
@@ -27,14 +28,45 @@ export class Trump<TGameStartr extends Trumpicorn> extends Component<TGameStartr
     /**
      * 
      */
-    public createAndPositionTrump(): ITrump {
+    public readonly projectiles: Projectiles<TGameStartr> = new Projectiles(this);
+
+    /**
+     * 
+     */
+    public createAndPositionTrump(existingTrump?: ITrump): ITrump {
         const trump: ITrump = this.gameStarter.objectMaker.make<ITrump>("Trump");
 
         this.gameStarter.things.add(trump);
-        this.gameStarter.physics.setMidX(trump, this.gameStarter.mapScreener.middleX / 2);
-        this.gameStarter.physics.setMidY(trump, this.gameStarter.mapScreener.middleY / 2);
+
+        if (existingTrump) {
+            this.gameStarter.physics.setMidObj(trump, existingTrump);
+            this.disable(
+                trump,
+                {
+                    duration: 490,
+                    strength: 7
+                });
+        } else {
+            this.gameStarter.physics.setMidX(trump, this.gameStarter.mapScreener.middleX / 2);
+            this.gameStarter.physics.setMidY(trump, this.gameStarter.mapScreener.middleY / 2);
+        }
 
         return trump;
+    }
+
+    /**
+     * 
+     */
+    public disable(trump: ITrump, powerup: IPowerupDescriptor): void {
+        trump.disabledByPowerup = powerup;
+        this.gameStarter.graphics.addClass(trump, "disabled");
+
+        this.gameStarter.timeHandler.addEvent(
+            (): void => {
+                trump.disabledByPowerup = undefined;
+                this.gameStarter.graphics.removeClass(trump, "disabled");
+            },
+            powerup.duration);
     }
 
     /**
@@ -50,24 +82,20 @@ export class Trump<TGameStartr extends Trumpicorn> extends Component<TGameStartr
 
         const dx: number = this.gameStarter.physics.getMidX(closestPlayer) - this.gameStarter.physics.getMidX(trump);
         const dy: number = this.gameStarter.physics.getMidY(closestPlayer) - this.gameStarter.physics.getMidY(trump);
-        const speed: number = trump.disabledByPowerup
-            ? trump.speed / trump.disabledByPowerup.strength
-            : trump.speed;
 
-        let xvel: number = dx > 0
-            ? Math.min(dx / 70, speed)
-            : Math.max(dx / 70, -speed);
-        let yvel: number = dy > 0
-            ? Math.min(dy / 70, speed)
-            : Math.max(dy / 70, -speed);
+        trump.xvel = dx / Math.sqrt(dx ** 2 + dy ** 2) * trump.speed;
+        trump.yvel = dy / Math.sqrt(dx ** 2 + dy ** 2) * trump.speed;
 
-        if (closestPlayer.bottom > this.gameStarter.mapScreener.bottom - closestPlayer.height) {
-            xvel *= 2.1;
-            yvel *= 2.1;
+        if (trump.disabledByPowerup) {
+            trump.xvel /= trump.disabledByPowerup.strength;
+            trump.yvel /= trump.disabledByPowerup.strength;
         }
 
-        trump.xvel = xvel;
-        trump.yvel = yvel;
+        if (closestPlayer.bottom > this.gameStarter.mapScreener.bottom - closestPlayer.height) {
+            trump.xvel *= 2.1;
+            trump.yvel *= 2.1;
+        }
+
         trump.speed += 0.00007;
     }
 
@@ -76,6 +104,23 @@ export class Trump<TGameStartr extends Trumpicorn> extends Component<TGameStartr
      */
     public onCollide(player: IPlayer): void {
         this.gameStarter.player.die(player);
+    }
+
+    /**
+     * 
+     */
+    public launchProjectile(trump: ITrump, interval: number): void {
+        this.projectiles.launchFromTrumpToPlayer(
+            trump,
+            this.gameStarter.numberMaker.randomArrayMember(this.gameStarter.players));
+
+        if (interval > 117) {
+            interval -= 5;
+        }
+
+        this.gameStarter.timeHandler.addEvent(
+            (): void => this.launchProjectile(trump, interval),
+            interval);
     }
 
     /**

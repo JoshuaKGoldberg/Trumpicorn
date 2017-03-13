@@ -134,6 +134,11 @@ export class Maintenance<TGameStartr extends Trumpicorn> extends Component<TGame
             this.gameStarter.timeHandler.cancelClassCycle(player, "running");
         }
 
+        // Sparkling visuals
+        this.gameStarter.particles.createParticle(
+            this.gameStarter.physics.getMidX(player),
+            this.gameStarter.physics.getMidY(player));
+
         // Collisions
         this.gameStarter.thingHitter.checkHitsForThing(player);
     }

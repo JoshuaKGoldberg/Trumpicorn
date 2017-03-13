@@ -17,18 +17,18 @@ export class Gameplay<TGameStartr extends Trumpicorn> extends GameStartrGameplay
 
         this.gameStarter.maps.setMap("America", "Freedom");
 
-        const trump: ITrump = this.gameStarter.trump.createAndPositionTrump();
         const rainbow: IThing = this.gameStarter.rainbows.createAndPositionRainbow();
 
         this.gameStarter.players = [
             this.gameStarter.player.createAndPositionPlayer(rainbow)
         ];
 
+        let trump: ITrump = this.addTrump();
         this.gameStarter.timeHandler.addEventInterval(
             (): void => {
-                this.gameStarter.powerups.addPowerups(this.gameStarter.players, trump);
+                trump = this.addTrump(trump);
             },
-            this.gameStarter.powerups.interval,
+            3500,
             Infinity);
 
         this.gameStarter.timeHandler.addEventInterval(
@@ -37,5 +37,27 @@ export class Gameplay<TGameStartr extends Trumpicorn> extends GameStartrGameplay
             Infinity);
 
         super.gameStart();
+    }
+
+    /**
+     * 
+     */
+    private addTrump(existingTrump?: ITrump): ITrump {
+        const trump: ITrump = this.gameStarter.trump.createAndPositionTrump(existingTrump);
+
+        this.gameStarter.timeHandler.addEventInterval(
+            (): void => {
+                this.gameStarter.powerups.addPowerups(this.gameStarter.players, trump);
+            },
+            this.gameStarter.powerups.interval,
+            Infinity);
+
+        this.gameStarter.timeHandler.addEvent(
+            (): void => this.gameStarter.trump.launchProjectile(
+                trump,
+                this.gameStarter.trump.projectiles.intervalStart),
+            this.gameStarter.trump.projectiles.intervalStart);
+
+        return trump;
     }
 }

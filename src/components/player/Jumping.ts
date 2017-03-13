@@ -31,7 +31,7 @@ export class Jumping<TGameStartr extends Trumpicorn> extends Component<TGameStar
             player.yvel -= Math.abs(player.xvel) / 2;
 
             label = "BOOST";
-            points += Math.floor(Math.abs(player.xvel) * Math.abs(player.yvel)) + 5;
+            points += Math.min(Math.floor(Math.abs(player.xvel) * Math.abs(player.yvel)) + 5, 150);
             sparkles += Math.ceil(Math.abs(player.xvel) + Math.abs(player.yvel));
         }
 

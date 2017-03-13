@@ -22,6 +22,11 @@ export function GenerateObjectsSettings(trumpicorn: Trumpicorn): IObjectsModuleS
                 Character: {
                     Player: {},
                     Powerup: {},
+                    Projectile: {
+                        Kellyanne: {},
+                        Pence: {},
+                        Spicer: {}
+                    },
                     Trump: {}
                 },
                 Particle: {
@@ -119,6 +124,12 @@ export function GenerateObjectsSettings(trumpicorn: Trumpicorn): IObjectsModuleS
                 width: 40,
                 height: 42,
                 onCollide: trumpicorn.powerups.onCollide.bind(trumpicorn.powerups)
+            },
+            Projectile: {
+                width: 28,
+                height: 28,
+                speed: 3.5,
+                onCollide: trumpicorn.trump.projectiles.onCollide.bind(trumpicorn.trump.projectiles)
             },
             Trump: {
                 width: 88,

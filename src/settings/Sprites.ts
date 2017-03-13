@@ -63,6 +63,11 @@ export function GenerateSpritesSettings(): ISpritesModuleSettings {
         library: {
             Character: {
                 Powerup: "p[26]x01345,",
+                Projectile: {
+                    Kellyane: "p[23]x0784,",
+                    Pence: "p[23]x0784,",
+                    Spicer: "p[23]x0784,"
+                },
                 Trump: "p[22]x07744,"
             },
             Particle: {

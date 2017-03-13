@@ -15,9 +15,9 @@ export interface IPowerupDescriptor {
     duration: number;
 
     /**
-     * How many points to award for getting this powerup.
+     * How many points to award for getting this powerup, if any.
      */
-    points: number;
+    points?: number;
 
     /**
      * 
@@ -49,7 +49,7 @@ export class Powerups<TGameStartr extends Trumpicorn> extends Component<TGameSta
      */
     private static readonly types: { [i: string]: IPowerupDescriptor } = {
         Powerup: {
-            duration: 350,
+            duration: 280,
             points: 500,
             strength: 2
         }
@@ -64,23 +64,17 @@ export class Powerups<TGameStartr extends Trumpicorn> extends Component<TGameSta
      * 
      */
     public onCollide(player: IPlayer, powerup: IPowerup): void {
-        powerup.trump.disabledByPowerup = powerup.descriptor;
-        this.gameStarter.graphics.addClass(powerup.trump, "disabled");
+        this.gameStarter.trump.disable(powerup.trump, powerup.descriptor);
         this.gameStarter.physics.killNormal(powerup);
 
-        this.gameStarter.scoring.score({
-            label: "POWERUP",
-            points: powerup.descriptor.points,
-            midX: this.gameStarter.physics.getMidX(player),
-            midY: this.gameStarter.physics.getMidY(player)
-        });
-
-        this.gameStarter.timeHandler.addEvent(
-            (): void => {
-                powerup.trump.disabledByPowerup = undefined;
-                this.gameStarter.graphics.removeClass(powerup.trump, "disabled");
-            },
-            powerup.descriptor.duration);
+        if (powerup.descriptor.points) {
+            this.gameStarter.scoring.score({
+                label: "POWERUP",
+                points: powerup.descriptor.points,
+                midX: this.gameStarter.physics.getMidX(player),
+                midY: this.gameStarter.physics.getMidY(player)
+            });
+        }
     }
 
     /**

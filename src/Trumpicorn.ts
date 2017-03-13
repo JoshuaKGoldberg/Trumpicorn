@@ -162,6 +162,7 @@ export class Trumpicorn extends GameStartr {
         ]);
 
         this.thingHitter.cacheChecksForType("Powerup", "Character");
+        this.thingHitter.cacheChecksForType("Projectile", "Character");
         this.thingHitter.cacheChecksForType("Trump", "Character");
         this.thingHitter.cacheChecksForType("Player", "Player");
         this.thingHitter.cacheChecksForType("Rainbow", "Solid");
