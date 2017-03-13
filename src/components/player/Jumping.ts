@@ -25,10 +25,10 @@ export class Jumping<TGameStartr extends Trumpicorn> extends Component<TGameStar
             this.gameStarter.physics.shiftVert(player, -Math.abs(player.resting.yvel));
         }
 
-        player.yvel = -3.5;
+        player.yvel = -4.2;
         if (player.resting && (player.xvel > 0) === (player.resting.xvel > 0)) {
-            player.xvel *= Math.abs(player.resting.xvel);
-            player.yvel -= Math.abs(player.xvel) / 2;
+            player.xvel += player.resting.xvel * 2.1;
+            player.yvel -= Math.abs(player.xvel) / 2.8;
 
             label = "BOOST";
             points += Math.min(Math.floor(Math.abs(player.xvel) * Math.abs(player.yvel)) + 5, 150);

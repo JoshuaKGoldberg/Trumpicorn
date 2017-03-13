@@ -12,22 +12,31 @@ export function GenerateInputSettings(trumpicorn: Trumpicorn): IInputModuleSetti
     return {
         aliases: {
             // Keyboard aliases
-            left:   [65, 37],     // a,     left
-            right:  [68, 39],     // d,     right
-            up:     [87, 38],     // w,     up
-            down:   [83, 40],     // s,     down
+            left: [37],
+            right: [39],
+            up: [38],
+            down: [40],
+            a: [65],
+            d: [68],
+            w: [87]
         },
         triggers: {
             onkeydown: {
-                left: trumpicorn.inputs.keyDownLeft.bind(trumpicorn.inputs),
-                right: trumpicorn.inputs.keyDownRight.bind(trumpicorn.inputs),
-                up: trumpicorn.inputs.keyDownUp.bind(trumpicorn.inputs),
-                down: trumpicorn.inputs.keyDownDown.bind(trumpicorn.inputs)
+                left: trumpicorn.inputs.receiveActionEvent.bind(trumpicorn.inputs, trumpicorn.inputs.keyDownLeft, 0),
+                right: trumpicorn.inputs.receiveActionEvent.bind(trumpicorn.inputs, trumpicorn.inputs.keyDownRight, 0),
+                up: trumpicorn.inputs.receiveActionEvent.bind(trumpicorn.inputs, trumpicorn.inputs.keyDownUp, 0),
+                down: trumpicorn.inputs.keyDownDown.bind(trumpicorn.inputs),
+                a: trumpicorn.inputs.receiveActionEvent.bind(trumpicorn.inputs, trumpicorn.inputs.keyDownLeft, 1),
+                d: trumpicorn.inputs.receiveActionEvent.bind(trumpicorn.inputs, trumpicorn.inputs.keyDownRight, 1),
+                w: trumpicorn.inputs.receiveActionEvent.bind(trumpicorn.inputs, trumpicorn.inputs.keyDownUp, 1)
             },
             onkeyup: {
-                left: trumpicorn.inputs.keyUpLeft.bind(trumpicorn.inputs),
-                right: trumpicorn.inputs.keyUpRight.bind(trumpicorn.inputs),
-                up: trumpicorn.inputs.keyUpUp.bind(trumpicorn.inputs)
+                left: trumpicorn.inputs.receiveActionEvent.bind(trumpicorn.inputs, trumpicorn.inputs.keyUpLeft, 0),
+                right: trumpicorn.inputs.receiveActionEvent.bind(trumpicorn.inputs, trumpicorn.inputs.keyUpRight, 0),
+                up: trumpicorn.inputs.receiveActionEvent.bind(trumpicorn.inputs, trumpicorn.inputs.keyUpUp, 0),
+                a: trumpicorn.inputs.receiveActionEvent.bind(trumpicorn.inputs, trumpicorn.inputs.keyUpLeft, 1),
+                d: trumpicorn.inputs.receiveActionEvent.bind(trumpicorn.inputs, trumpicorn.inputs.keyUpRight, 1),
+                w: trumpicorn.inputs.receiveActionEvent.bind(trumpicorn.inputs, trumpicorn.inputs.keyUpUp, 1)
             },
             oncontextmenu: {},
             onmousedown: {}

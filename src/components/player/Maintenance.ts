@@ -63,12 +63,6 @@ export class Maintenance<TGameStartr extends Trumpicorn> extends Component<TGame
                     this.gameStarter.physics.shiftVert(player, -1);
                 }
 
-                if (player.xvel > 0) {
-                    player.xvel += .035;
-                } else if (player.xvel < 0) {
-                    player.xvel -= .035;
-                }
-
                 this.gameStarter.particles.createParticle(
                     this.gameStarter.numberMaker.randomWithin(player.left, player.right),
                     player.bottom);

@@ -98,16 +98,26 @@ export class Player<TGameStartr extends Trumpicorn> extends Component<TGameStart
 
     /**
      * 
-     * 
-     * @todo Extend for multiplayer?
      */
-    public createAndPositionPlayer(rainbow: IThing): IPlayer {
+    public createOnRainbow(rainbow: IThing): IPlayer {
         const player: IPlayer = this.gameStarter.objectMaker.make<IPlayer>("Player");
-
-        player.resting = rainbow;
 
         this.gameStarter.physics.setMidXObj(player, rainbow);
         this.gameStarter.physics.setBottom(player, rainbow.top);
+        this.gameStarter.things.add(player);
+
+        return player;
+    }
+
+    /**
+     * 
+     */
+    public createAdditionalPlayer(): IPlayer {
+        const existingPlayer: IPlayer = this.gameStarter.players[this.gameStarter.players.length - 1];
+        const player: IPlayer = this.gameStarter.objectMaker.make<IPlayer>("Player");
+
+        this.gameStarter.physics.setMidObj(player, existingPlayer);
+        this.gameStarter.players.push(player);
         this.gameStarter.things.add(player);
 
         return player;

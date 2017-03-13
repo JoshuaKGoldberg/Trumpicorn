@@ -20,7 +20,7 @@ export class Gameplay<TGameStartr extends Trumpicorn> extends GameStartrGameplay
         const rainbow: IThing = this.gameStarter.rainbows.createAndPositionRainbow();
 
         this.gameStarter.players = [
-            this.gameStarter.player.createAndPositionPlayer(rainbow)
+            this.gameStarter.player.createOnRainbow(rainbow)
         ];
 
         this.addTrump();

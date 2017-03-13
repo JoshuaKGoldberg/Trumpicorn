@@ -75,7 +75,9 @@ export class Powerups<TGameStartr extends Trumpicorn> extends Component<TGameSta
      */
     public addPowerups(players: IPlayer[]): void {
         for (const player of players) {
-            this.createPowerupForPlayer(player);
+            if (player.alive && !player.frozen) {
+                this.createPowerupForPlayer(player);
+            }
         }
     }
 

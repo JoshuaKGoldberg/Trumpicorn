@@ -142,7 +142,7 @@ export class Trump<TGameStartr extends Trumpicorn> extends Component<TGameStartr
      * 
      */
     private getClosestPlayer(trump: ITrump, players: IPlayer[]): IPlayer | undefined {
-        let bestDistance: number = -Infinity;
+        let bestDistance: number = Infinity;
         let bestPlayer: IPlayer | undefined = undefined;
 
         for (const player of players) {
@@ -154,7 +154,7 @@ export class Trump<TGameStartr extends Trumpicorn> extends Component<TGameStartr
                 Math.abs(this.gameStarter.physics.getMidX(trump) - this.gameStarter.physics.getMidX(player))
                 + Math.abs(this.gameStarter.physics.getMidY(trump) - this.gameStarter.physics.getMidY(player)));
 
-            if (distance > bestDistance) {
+            if (distance < bestDistance) {
                 bestDistance = distance;
                 bestPlayer = player;
             }

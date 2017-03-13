@@ -1,6 +1,14 @@
 import { Component } from "eightbittr/lib/Component";
 
 import { Trumpicorn } from "../Trumpicorn";
+import { IPlayer } from "./Player";
+
+/**
+ * 
+ */
+export interface IInputsCallback<TGameStartr extends Trumpicorn, TInputs extends Inputs<TGameStartr>> {
+    (this: TInputs, player: IPlayer): void;
+}
 
 /**
  * Input functions used by Trumpicorn instances.
@@ -21,28 +29,37 @@ export class Inputs<TGameStartr extends Trumpicorn> extends Component<TGameStart
     }
 
     /**
-     * Reacts to a Character simulating an up key press. If possible, this causes
-     * walking in the up direction. The onKeyDownUp mod trigger is fired.
      * 
-     * @param this.gameStarter.players[0]   The triggering Character.
-     * @param event   The original user-caused Event.
      */
-    public keyDownUp(_: void, event?: Event): void {
+    public receiveActionEvent(callback: IInputsCallback<TGameStartr, this>, playerIndex: number, event: Event): void {
         if (event && event.preventDefault) {
             event.preventDefault();
         }
 
+        const player: IPlayer = this.gameStarter.players[playerIndex] || this.gameStarter.player.createAdditionalPlayer();
+
+        callback.call(this, player, event);
+    }
+
+    /**
+     * Reacts to a Character simulating an up key press. If possible, this causes
+     * walking in the up direction. The onKeyDownUp mod trigger is fired.
+     * 
+     * @param player   The triggering Player.
+     * @param event   The original user-caused Event.
+     */
+    public keyDownUp(player: IPlayer): void {
         if (!this.canDirectionsTrigger()) {
             return;
         }
 
-        this.gameStarter.players[0].keys.up = true;
+        player.keys.up = true;
     }
 
     /**
      * 
      */
-    public keyDownDown(_: void, event?: Event): void {
+    public keyDownDown(event?: Event): void {
         if (event && event.preventDefault) {
             event.preventDefault();
         }
@@ -52,79 +69,59 @@ export class Inputs<TGameStartr extends Trumpicorn> extends Component<TGameStart
      * Reacts to a Character simulating a right key press. If possible, this causes
      * walking in the right direction. The onKeyDownRight mod trigger is fired.
      * 
-     * @param this.gameStarter.players[0]   The triggering Character.
+     * @param player   The triggering Player.
      * @param event   The original user-caused Event.
      */
-    public keyDownRight(_: void, event?: Event): void {
-        if (event && event.preventDefault) {
-            event.preventDefault();
-        }
-
+    public keyDownRight(player: IPlayer): void {
         if (!this.canDirectionsTrigger()) {
             return;
         }
 
-        this.gameStarter.players[0].keys.right = true;
+        player.keys.right = true;
     }
 
     /**
      * Reacts to a Character simulating a left key press. If possible, this causes
      * walking in the left direction. The onKeyDownLeft mod trigger is fired.
      * 
-     * @param this.gameStarter.players[0]   The triggering Character.
+     * @param player   The triggering Player.
      * @param event   The original user-caused Event.
      */
-    public keyDownLeft(_: void, event?: Event): void {
-        if (event && event.preventDefault) {
-            event.preventDefault();
-        }
-
+    public keyDownLeft(player: IPlayer): void {
         if (!this.canDirectionsTrigger()) {
             return;
         }
 
-        this.gameStarter.players[0].keys.left = true;
+        player.keys.left = true;
     }
 
     /**
      * Reacts to the left key being lifted. The onKeyUpLeft mod event is fired.
      * 
-     * @param this.gameStarter.players[0]   The triggering Character.
+     * @param player   The triggering Player.
      * @param event   The original user-caused Event.
      */
-    public keyUpLeft(_: void, event?: Event): void {
-        if (event && event.preventDefault) {
-            event.preventDefault();
-        }
-
-        this.gameStarter.players[0].keys.left = false;
+    public keyUpLeft(player: IPlayer): void {
+        player.keys.left = false;
     }
 
     /**
      * Reacts to the right key being lifted. The onKeyUpRight mod event is fired.
      * 
-     * @param this.gameStarter.players[0]   The triggering Character.
+     * @param player   The triggering Player.
      * @param event   The original user-caused Event.
      */
-    public keyUpRight(_: void, event?: Event): void {
-        if (event && event.preventDefault) {
-            event.preventDefault();
-        }
-
-        this.gameStarter.players[0].keys.right = false;
+    public keyUpRight(player: IPlayer): void {
+        player.keys.right = false;
     }
 
     /**
      * Reacts to the up key being lifted. The onKeyUpUp mod event is fired.
      * 
-     * @param this.gameStarter.players[0]   The triggering Character.
+     * @param player   The triggering Player.
      * @param event   The original user-caused Event.
      */
-    public keyUpUp(_: void, event?: Event): void {
-        if (event && event.preventDefault) {
-            event.preventDefault();
-        }
-
-        this.gameStarter.players[0].keys.up = false;
+    public keyUpUp(player: IPlayer): void {
+        player.keys.up = false;
     }
 }
