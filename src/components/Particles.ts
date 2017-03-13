@@ -20,7 +20,7 @@ export interface IParticleSettings {
     /**
      * 
      */
-    color?: string;
+    colors?: string[];
 
     /**
      * 
@@ -73,7 +73,7 @@ export class Particles<TGameStartr extends Trumpicorn> extends Component<TGameSt
 
         this.gameStarter.graphics.addClass(
             particle,
-            settings.color || this.gameStarter.numberMaker.randomArrayMember(Particles.colors));
+            this.gameStarter.numberMaker.randomArrayMember(settings.colors || Particles.colors));
 
         return particle;
     }

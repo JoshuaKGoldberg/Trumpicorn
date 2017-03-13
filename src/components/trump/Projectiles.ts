@@ -28,15 +28,15 @@ export class Projectiles<TGameStartr extends Trumpicorn> extends Component<TGame
      */
     private static readonly quotes: string[] = [
         "ALTERNATIVE FACTS!",
-        "BUILD THE WALL!",
-        "THE CYBER",
-        "GOOD PEOPLE DON'T GO INTO GOVERNMENT",
+        "BUILD A WALL!",
+        "DRAIN THE SWAMP",
         "GRAB THEM!",
-        "I'M VERY RICH!",
+        "I'M VERY RICH",
         "JINA!",
-        "MY IQ IS ONE OF THE HIGHEST!",
+        "MY IQ IS ONE OF THE HIGHEST",
         "NEGATIVE POLLS ARE FAKE NEWS!",
         "SAD!",
+        "THE CYBER",
         "YOU'RE DISGUSTING!"
     ];
 
@@ -82,6 +82,17 @@ export class Projectiles<TGameStartr extends Trumpicorn> extends Component<TGame
         });
 
         return projectile;
+    }
+
+    /**
+     * 
+     */
+    public movement(projectile: IProjectile): void {
+        this.gameStarter.particles.createSparkle({
+            midX: this.gameStarter.physics.getMidX(projectile),
+            midY: this.gameStarter.physics.getMidY(projectile),
+            colors: ["red", "orange", "yellow"]
+        });
     }
 
     /**

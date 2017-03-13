@@ -62,11 +62,6 @@ export class Maintenance<TGameStartr extends Trumpicorn> extends Component<TGame
                 } else if (player.bottom > player.resting.top) {
                     this.gameStarter.physics.shiftVert(player, -1);
                 }
-
-                this.gameStarter.particles.createSparkle({
-                    midX: this.gameStarter.numberMaker.randomWithin(player.left, player.right),
-                    midY: player.bottom
-                });
             }
         }
 
@@ -114,26 +109,30 @@ export class Maintenance<TGameStartr extends Trumpicorn> extends Component<TGame
         if (!player.resting
             || (Math.abs(player.xvel) - Math.abs(player.resting.xvel)) > 0.35
             || (Math.abs(player.yvel) - Math.abs(player.resting.yvel)) > 0.35) {
-            if (!player.isRunning) {
-                player.isRunning = true;
+            if (!player.running) {
+                player.running = true;
                 this.gameStarter.graphics.addClass(player, "running");
                 this.gameStarter.timeHandler.addClassCycle(
                     player,
-                    ["two", "three", "four", "five", "normal"],
+                    ["two", "three", "four", "five", "six", "normal"],
                     "running",
-                    14);
+                    4);
             }
-        } else if (player.isRunning) {
-            player.isRunning = false;
-            this.gameStarter.graphics.removeClasses(player, "running", "two", "three", "four", "five");
+        } else if (player.running) {
+            player.running = false;
+            this.gameStarter.graphics.removeClasses(player, "running", "two", "three", "four", "five", "six");
             this.gameStarter.timeHandler.cancelClassCycle(player, "running");
         }
 
         // Sparkling visuals
-        this.gameStarter.particles.createSparkle({
-            midX: this.gameStarter.physics.getMidX(player),
-            midY: this.gameStarter.physics.getMidY(player)
-        });
+        if (this.gameStarter.numberMaker.randomBooleanProbability(0.35)) {
+            this.gameStarter.particles.createSparkle({
+                midX: player.flipHoriz
+                    ? player.right - 14
+                    : player.left + 14,
+                midY: this.gameStarter.physics.getMidY(player)
+            });
+        }
 
         // Collisions
         this.gameStarter.thingHitter.checkHitsForThing(player);

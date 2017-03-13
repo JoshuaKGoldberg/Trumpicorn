@@ -32,7 +32,7 @@ export class Jumping<TGameStartr extends Trumpicorn> extends Component<TGameStar
 
             label = "BOOST";
             points += Math.min(Math.floor(Math.abs(player.xvel) * Math.abs(player.yvel)) + 5, 150);
-            sparkles += Math.ceil(Math.abs(player.xvel) + Math.abs(player.yvel));
+            sparkles += Math.ceil((Math.abs(player.xvel) + Math.abs(player.yvel)) / 2.8);
         }
 
         player.jumping = true;
@@ -63,6 +63,7 @@ export class Jumping<TGameStartr extends Trumpicorn> extends Component<TGameStar
     private createJumpSparkles(player: IPlayer, quantity: number): void {
         for (let i: number = 0; i < quantity; i += 1) {
             this.gameStarter.particles.createSparkle({
+                colors: ["normal", "blue", "cyan"],
                 midX: this.gameStarter.numberMaker.randomWithin(player.left, player.right),
                 midY: this.gameStarter.numberMaker.randomWithin(player.top, player.bottom)
             });

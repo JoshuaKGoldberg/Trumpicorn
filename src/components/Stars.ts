@@ -34,12 +34,6 @@ export class Stars<TGameStartr extends Trumpicorn> extends Component<TGameStartr
     public onStarAdded(star: IThing): void {
         star.yvel = this.gameStarter.numberMaker.randomWithin(-0.14, -0.28);
 
-        this.gameStarter.timeHandler.addClassCycle(
-            star,
-            ["one", "two", "three"],
-            "shimmer",
-            this.gameStarter.numberMaker.randomIntWithin(49, 84));
-
         this.gameStarter.graphics.addClass(
             star,
             this.gameStarter.numberMaker.randomArrayMember(["one", "two", "three"]));

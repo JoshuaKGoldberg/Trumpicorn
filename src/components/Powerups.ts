@@ -57,7 +57,7 @@ export class Powerups<TGameStartr extends Trumpicorn> extends Component<TGameSta
         }
 
         this.gameStarter.particles.createSparkle({
-            color: "red",
+            colors: ["red", "normal"],
             midX: this.gameStarter.numberMaker.randomWithin(powerup.left - 35, powerup.right + 35),
             midY: this.gameStarter.numberMaker.randomWithin(powerup.top - 35, powerup.bottom + 35),
             stationary: true

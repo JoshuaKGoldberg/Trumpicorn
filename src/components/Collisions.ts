@@ -74,8 +74,6 @@ export class Collisions<TGameStartr extends Trumpicorn> extends Component<TGameS
             player.resting = solid;
             player.yvel = 0;
 
-            this.gameStarter.timeHandler.cancelAllCycles(player);
-
             return false;
         };
     }

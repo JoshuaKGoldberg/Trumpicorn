@@ -124,6 +124,7 @@ export function GenerateObjectsSettings(trumpicorn: Trumpicorn): IObjectsModuleS
                 width: 28,
                 height: 28,
                 speed: 3.5,
+                movement: trumpicorn.trump.projectiles.movement.bind(trumpicorn.trump.projectiles),
                 onCollide: trumpicorn.trump.projectiles.onCollide.bind(trumpicorn.trump.projectiles)
             },
             Trump: {
